@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <title>Loading</title>
+  <link rel="icon" href="data:image/ico;base64,aWNv" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1.0, minimum-scale=1.0" />
+  <!-- <link rel="preload" as="font" href="//cdn.jsdelivr.net/npm/zls-manage/fonts/element-icons.woff" crossorigin="anonymous" /> -->
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/zls-manage/324157.css" />
+  <link rel="stylesheet" href="src/styles/index.css" />
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/zls-manage/fonts/iconfont/iconfont.css" />
+
+</head>
+
+<body>
+<!--[if lte IE 10]>
+  <style>
+    body > :not(.browsehappy) {
+      display : none;
+    }
+
+    .browsehappy {
+      text-align : center;
+      position : absolute;
+      width : 100%;
+      height : 100%;
+      background-color : #FFFFFF;
+      z-index : 99;
+      font-size : 20px;
+      padding-top : 100px;
+      box-sizing : border-box;
+    }
+
+  </style>
+  <p class="browsehappy">
+    你正在使用<strong>过时</strong>的浏览器。 请<a
+      href="https://browsehappy.com/"
+      target="_blank"
+      >升级浏览器</a
+    >以获得更好的体验！
+  </p><!
+[endif]-->
+<div id="app">
+  <component v-bind:is="childView"></component>
+  <div class="loading-group" id="loading" v-if="loading">
+    <div class="sk-cube-grid">
+      <div class="sk-cube sk-cube1"></div>
+      <div class="sk-cube sk-cube2"></div>
+      <div class="sk-cube sk-cube3"></div>
+      <div class="sk-cube sk-cube4"></div>
+      <div class="sk-cube sk-cube5"></div>
+      <div class="sk-cube sk-cube6"></div>
+      <div class="sk-cube sk-cube7"></div>
+      <div class="sk-cube sk-cube8"></div>
+      <div class="sk-cube sk-cube9"></div>
+    </div>
+    <div class="title">加载中...</div>
+    <div class="sub-title">初次加载会比较慢，请耐心等待</div>
+    <noscript>
+      <h3 class="noscript">本页面需要浏览器支持（启用）JavaScript</h3>
+    </noscript>
+  </div>
+</div>
+<script src="//cdn.jsdelivr.net/npm/zls-manage/vue.min.js"></script>
+<script>
+  var debug = true;
+  var cache = false;
+  var pathname = location.pathname;
+  if (pathname.indexOf('index.html') && (pathname.substr(pathname.length - 1, 1) !== '/')) {
+    location.replace(location.href + '/');
+  }
+</script>
+<!-- <script src="//cdn.jsdelivr.net/npm/zls-manage/vue.js"></script> -->
+<script src="//cdn.jsdelivr.net/npm/zls-manage/vuex.js"></script>
+<script src="//cdn.jsdelivr.net/npm/zls-manage/zls-vue-spa.js"></script>
+<script src="//cdn.jsdelivr.net/npm/zls-manage/element.js"></script>
+<script src="src/script/mixins.js"></script>
+<script src="src/script/config.js"></script>
+<script src="src/script/system.js"></script>
+</body>
+</html>

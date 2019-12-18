@@ -1,0 +1,14 @@
+.idea/
+.vscode/
+vendor/
+app/storage/*
+app/config/production/*
+app/config/development/*
+app/Backup_ArtisanExport*
+public/admin/
+zls.ini
+.DS_Store
+.phpunit.result.cache
+!.gitkeep
+!.gitignore
+!.htaccess

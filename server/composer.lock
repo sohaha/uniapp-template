@@ -1,0 +1,422 @@
+{
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
+        "This file is @generated automatically"
+    ],
+    "content-hash": "7b42c4088d15dff8d3bbc238950974d3",
+    "packages": [
+        {
+            "name": "zls/action",
+            "version": "v1.2.7.5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/sohaha/ZlsPHP-Action.git",
+                "reference": "3f9df8d059b4d3d387321781711316d4be012fe1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/sohaha/ZlsPHP-Action/zipball/3f9df8d059b4d3d387321781711316d4be012fe1",
+                "reference": "3f9df8d059b4d3d387321781711316d4be012fe1",
+                "shasum": "",
+                "mirrors": [
+                    {
+                        "url": "https://mirrors.aliyun.com/composer/dists/%package%/%reference%.%type%",
+                        "preferred": true
+                    }
+                ]
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Zls\\Action\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "影浅",
+                    "email": "seekwe@gmail.com"
+                }
+            ],
+            "time": "2019-12-12T11:08:22+00:00"
+        },
+        {
+            "name": "zls/cache",
+            "version": "1.1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/sohaha/ZlsPHP-Cache.git",
+                "reference": "ca2b700c1921005f2b8a960c7aa4c8adcecd983f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/sohaha/ZlsPHP-Cache/zipball/ca2b700c1921005f2b8a960c7aa4c8adcecd983f",
+                "reference": "ca2b700c1921005f2b8a960c7aa4c8adcecd983f",
+                "shasum": "",
+                "mirrors": [
+                    {
+                        "url": "https://mirrors.aliyun.com/composer/dists/%package%/%reference%.%type%",
+                        "preferred": true
+                    }
+                ]
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Zls\\Cache\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "影浅",
+                    "email": "seekwe@gmail.com"
+                }
+            ],
+            "time": "2018-09-27T11:26:45+00:00"
+        },
+        {
+            "name": "zls/command",
+            "version": "v1.2.4.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/sohaha/ZlsPHP-Command.git",
+                "reference": "9fb8e6633b335f35d288451c11b53bf4f6818c62"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/sohaha/ZlsPHP-Command/zipball/9fb8e6633b335f35d288451c11b53bf4f6818c62",
+                "reference": "9fb8e6633b335f35d288451c11b53bf4f6818c62",
+                "shasum": "",
+                "mirrors": [
+                    {
+                        "url": "https://mirrors.aliyun.com/composer/dists/%package%/%reference%.%type%",
+                        "preferred": true
+                    }
+                ]
+            },
+            "require": {
+                "zls/dao": "*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Zls\\Command\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "影浅",
+                    "email": "seekwe@gmail.com"
+                }
+            ],
+            "time": "2019-09-20T07:28:52+00:00"
+        },
+        {
+            "name": "zls/dao",
+            "version": "v1.1.7",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/sohaha/ZlsPHP-Dao.git",
+                "reference": "a5b701fcf65dba7f71f8925354252d8f4081dfef"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/sohaha/ZlsPHP-Dao/zipball/a5b701fcf65dba7f71f8925354252d8f4081dfef",
+                "reference": "a5b701fcf65dba7f71f8925354252d8f4081dfef",
+                "shasum": "",
+                "mirrors": [
+                    {
+                        "url": "https://mirrors.aliyun.com/composer/dists/%package%/%reference%.%type%",
+                        "preferred": true
+                    }
+                ]
+            },
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "ZlsDao.php"
+                ],
+                "psr-4": {
+                    "Zls\\Dao\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "影浅",
+                    "email": "seekwe@gmail.com"
+                }
+            ],
+            "time": "2019-11-13T11:06:20+00:00"
+        },
+        {
+            "name": "zls/framework",
+            "version": "v2.4.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/sohaha/ZlsPHP-Framework.git",
+                "reference": "e2f535c14ecb6aa4981e5680a0561c42eec1b416"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/sohaha/ZlsPHP-Framework/zipball/e2f535c14ecb6aa4981e5680a0561c42eec1b416",
+                "reference": "e2f535c14ecb6aa4981e5680a0561c42eec1b416",
+                "shasum": "",
+                "mirrors": [
+                    {
+                        "url": "https://mirrors.aliyun.com/composer/dists/%package%/%reference%.%type%",
+                        "preferred": true
+                    }
+                ]
+            },
+            "require": {
+                "ext-json": "*",
+                "ext-pdo": "*"
+            },
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "Zls.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "影浅",
+                    "email": "seekwe@gmail.com"
+                }
+            ],
+            "time": "2019-12-18T07:01:53+00:00"
+        },
+        {
+            "name": "zls/logger",
+            "version": "v1.1.6",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/sohaha/ZlsPHP-Logger.git",
+                "reference": "b8e2a7026b10cf93638c12f704732a6f586cc0bc"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/sohaha/ZlsPHP-Logger/zipball/b8e2a7026b10cf93638c12f704732a6f586cc0bc",
+                "reference": "b8e2a7026b10cf93638c12f704732a6f586cc0bc",
+                "shasum": "",
+                "mirrors": [
+                    {
+                        "url": "https://mirrors.aliyun.com/composer/dists/%package%/%reference%.%type%",
+                        "preferred": true
+                    }
+                ]
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Zls\\Logger\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "影浅",
+                    "email": "seekwe@gmail.com"
+                }
+            ],
+            "time": "2019-06-17T08:03:01+00:00"
+        },
+        {
+            "name": "zls/manage",
+            "version": "v0.0.53",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/sohaha/ZlsPHP-Manage.git",
+                "reference": "61ea340f2a79c0541fcb5265d1dbea5d1c45e8f3"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/sohaha/ZlsPHP-Manage/zipball/61ea340f2a79c0541fcb5265d1dbea5d1c45e8f3",
+                "reference": "61ea340f2a79c0541fcb5265d1dbea5d1c45e8f3",
+                "shasum": "",
+                "mirrors": [
+                    {
+                        "url": "https://mirrors.aliyun.com/composer/dists/%package%/%reference%.%type%",
+                        "preferred": true
+                    }
+                ]
+            },
+            "require": {
+                "zls/migration": "*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Zls\\Manage\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "影浅",
+                    "email": "seekwe@gmail.com"
+                }
+            ],
+            "description": "ZlsPHP通用后台",
+            "time": "2019-12-12T10:11:37+00:00"
+        },
+        {
+            "name": "zls/migration",
+            "version": "v1.1.6.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/sohaha/ZlsPHP-Migration.git",
+                "reference": "eff35a82bed7698bb0c50bc24d352bd029ba8421"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/sohaha/ZlsPHP-Migration/zipball/eff35a82bed7698bb0c50bc24d352bd029ba8421",
+                "reference": "eff35a82bed7698bb0c50bc24d352bd029ba8421",
+                "shasum": "",
+                "mirrors": [
+                    {
+                        "url": "https://mirrors.aliyun.com/composer/dists/%package%/%reference%.%type%",
+                        "preferred": true
+                    }
+                ]
+            },
+            "require": {
+                "php": ">=5.6.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Zls\\Migration\\": "src/",
+                    "Phinx\\": "phinx/Phinx/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "影浅",
+                    "email": "seekwe@gmail.com"
+                }
+            ],
+            "description": "Easy to manage the database migrations",
+            "time": "2019-09-27T10:16:03+00:00"
+        },
+        {
+            "name": "zls/session",
+            "version": "1.0.7",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/sohaha/ZlsPHP-Session.git",
+                "reference": "220ae9fb847552014111c975bc02e5cca9490633"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/sohaha/ZlsPHP-Session/zipball/220ae9fb847552014111c975bc02e5cca9490633",
+                "reference": "220ae9fb847552014111c975bc02e5cca9490633",
+                "shasum": "",
+                "mirrors": [
+                    {
+                        "url": "https://mirrors.aliyun.com/composer/dists/%package%/%reference%.%type%",
+                        "preferred": true
+                    }
+                ]
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Zls\\Session\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "影浅",
+                    "email": "seekwe@gmail.com"
+                }
+            ],
+            "time": "2018-09-30T09:13:57+00:00"
+        },
+        {
+            "name": "zls/wechat",
+            "version": "v1.1.12",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/sohaha/zls-wechat.git",
+                "reference": "02fddfd705c88bd04e100113183b496cdb91a166"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/sohaha/zls-wechat/zipball/02fddfd705c88bd04e100113183b496cdb91a166",
+                "reference": "02fddfd705c88bd04e100113183b496cdb91a166",
+                "shasum": "",
+                "mirrors": [
+                    {
+                        "url": "https://mirrors.aliyun.com/composer/dists/%package%/%reference%.%type%",
+                        "preferred": true
+                    }
+                ]
+            },
+            "require": {
+                "zls/action": "*",
+                "zls/command": "*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Zls\\WeChat\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "影浅",
+                    "email": "seekwe@gmail.com"
+                }
+            ],
+            "description": "wechat develop, Support WeChat, Work WeChat, WeChat open platform",
+            "time": "2019-12-16T09:57:17+00:00"
+        }
+    ],
+    "packages-dev": [],
+    "aliases": [],
+    "minimum-stability": "dev",
+    "stability-flags": [],
+    "prefer-stable": true,
+    "prefer-lowest": false,
+    "platform": [],
+    "platform-dev": []
+}

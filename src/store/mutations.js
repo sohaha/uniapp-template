@@ -1,0 +1,35 @@
+/**
+ * @Author: seekwe
+ * @Date:   2019-11-07 12:44:25
+ * @Last Modified by:   seekwe
+ * @Last Modified time: 2019-12-17 16:00:24
+ */
+import Vue from 'vue';
+import util from '@/common/util';
+
+export const SET_TOKEN = (state, token) => {
+  state.token = token;
+  uni.setStorage({
+    key: 'token',
+    data: token
+  });
+};
+export const USER_SIGNIN = (state, user) => {
+  util.$log('更新用户信息', user);
+  if (user.nickname) {
+    user.authState = true;
+  }
+  if (!user.banState) {
+    user.banState = false;
+  }
+  Object.assign(state.user, user);
+
+  uni.setStorage({
+    key: 'user',
+    data: state.user
+  });
+};
+
+export const USER_SIGNOUT = state => {
+  Object.keys(state.user).forEach(k => Vue.delete(state.user, k));
+};

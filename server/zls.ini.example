@@ -1,0 +1,42 @@
+[zls]
+;;;;;;;;;;;;;;;;;;;
+; About zls.ini   ;
+;;;;;;;;;;;;;;;;;;;
+
+[base]
+name = "zls"
+; 调试模式
+debug = 1
+; 维护模式
+maintainMode = 0
+; IP白名单
+ipWhitelist[] =
+
+[cache]
+; 缓存类型
+type = "file"
+
+[db]
+; 数据库端口
+port = 3306
+; 数据库地址
+hostname =''
+; 数据库用户
+username = ''
+; 数据库密码
+password = ''
+; 数据库名
+database = ''
+; 表前缀
+tablePrefix = ''
+
+[wechat]
+token = ''
+appid = 'wx55a57ece23099d67'
+appsecret = 'ec5985f60f7f9e995e8d914fa1470284'
+corpid = ''
+agentid = ''
+encodingAesKey = ''
+componentAppid = ''
+componentAppsecret = ''
+debug = 1
