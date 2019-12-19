@@ -2,7 +2,7 @@
  * @Author: seekwe
  * @Date:   2019-11-07 12:44:25
  * @Last Modified by:   seekwe
- * @Last Modified time: 2019-12-17 16:00:24
+ * @Last Modified time: 2019-12-18 20:05:59
  */
 import Vue from 'vue';
 import util from '@/common/util';
@@ -23,10 +23,9 @@ export const USER_SIGNIN = (state, user) => {
     user.banState = false;
   }
   Object.assign(state.user, user);
-
   uni.setStorage({
     key: 'user',
-    data: state.user
+    data: Object.assign({}, state.user, { banState: false })
   });
 };
 
