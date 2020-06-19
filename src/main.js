@@ -19,6 +19,13 @@ import appApi from './apis/util-app';
 
 import util from './common/util';
 
+import * as Sentry from "./common/sentry";
+
+// Sentry.init({
+//   dsn: "https://47703e01ba4344b8b252c15e8fd980fd@sentry.io/1528228",
+// });
+// Sentry.captureMessage("Hello, sentry!")
+
 Object.assign(Vue.prototype, util);
 
 // #ifdef MP-WEIXIN
