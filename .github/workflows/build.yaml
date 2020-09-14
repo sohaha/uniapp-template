@@ -1,0 +1,35 @@
+
+# secrets.MINI_APPID: APPID
+# secrets.MINI_UPLOAD_PRIVATE_KEY: 密钥
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [10.x]
+    steps:
+    - uses: actions/checkout@v2
+    - uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+    # 安装依赖
+    - name: install
+      run: npm i
+    # 构建
+    - name: build mp-weixin
+      run: npm run build:mp-weixin
+    - name: create private key file
+      run: echo "$MINI_UPLOAD_PRIVATE_KEY" > private.key
+      env:
+        MINI_UPLOAD_PRIVATE_KEY: ${{ secrets.MINI_UPLOAD_PRIVATE_KEY }}
+    - name: get package version
+      id: package-version
+      uses: martinbeentjes/npm-get-version-action@master
+    - name: upload mp-weixin
+      run: npx miniprogram-ci upload --pp ./dist/build/mp-weixin --pkp ./private.key --appid ${{ secrets.MINI_APPID }} --uv ${{ steps.package-version.outputs.current-version}} --type miniProgram --robot 1

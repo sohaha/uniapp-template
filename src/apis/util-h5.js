@@ -5,7 +5,7 @@
  * @Last Modified time: 2019-12-17 16:07:09
  */
 import { ajax, getToken } from './index';
-import { fly } from './index';
+import { request } from './index';
 import $store from '../store';
 import util from '@/common/util';
 export default {

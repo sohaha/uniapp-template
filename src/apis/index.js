@@ -9,6 +9,7 @@ import util from '../common/util';
 import store from '../store';
 import Fly from 'flyio/dist/npm/wx';
 import qs from 'qs';
+import { getToken as ApiGetToken} from './modules/user';
 // #ifndef H5
 import appApi from './util-app';
 // #endif
@@ -17,7 +18,7 @@ import appApi from './util-h5';
 // #endif
 
 // https://wendux.github.io/dist/#/doc/flyio/readme
-export const fly = new Fly();
+export const request = new Fly();
 const newFly = new Fly();
 const files = require.context('./modules', false, /\.js$/);
 let apis = {},
@@ -94,7 +95,7 @@ const api = async (
   let [type, url] = api;
   let res;
   if (typeof success === 'function') {
-    res = await fly
+    res = await request
     .request(url, qs.stringify(data), {
       method: type
     })
@@ -109,7 +110,7 @@ const api = async (
     })
     .finally(complete);
   } else {
-    res = fly
+    res = request
     .request(url, qs.stringify(data), {
       method: type
     })
@@ -122,12 +123,12 @@ const api = async (
   return res;
 };
 
-fly.config.baseURL = cfg.apiHost;
-fly.config.timeout = cfg.apiTimeout;
-fly.config.headers = {};
+request.config.baseURL = cfg.apiHost;
+request.config.timeout = cfg.apiTimeout;
+request.config.headers = {};
 
 // 添加请求拦截器
-fly.interceptors.request.use(
+request.interceptors.request.use(
   request => {
     let token = store.getters.token;
     if (token) {
@@ -144,7 +145,7 @@ fly.interceptors.request.use(
 
 let getTokenStatsu = false;
 // 添加响应拦截器
-fly.interceptors.response.use(
+request.interceptors.response.use(
   async response => {
     const data = response.data;
     const no = noJSON(data);
@@ -159,7 +160,7 @@ fly.interceptors.response.use(
         setTimeout(_ => {
           getTokenStatsu = false;
         }, 20000);
-        newFly.config = fly.config;
+        newFly.config = request.config;
 
         // #ifdef H5
         log('h5 不能预获取 Token');
@@ -167,7 +168,7 @@ fly.interceptors.response.use(
         // #endif
 
         return await getToken(_ => {
-          return fly.request(response.request).then(e => {
+          return request.request(response.request).then(e => {
             return e;
           });
         }) || data;
@@ -194,27 +195,19 @@ fly.interceptors.response.use(
 );
 
 export const getToken = async (fn = _ => {}, errFn = _ => {}) => {
-  fly.lock(); // 锁住请求队列，先执行获取token操作
+  request.lock(); // 锁住请求队列，先执行获取token操作
   let code = await appApi.getLoginCode();
-  newFly.config = fly.config;
+  newFly.config = request.config;
   try {
-    let url = '';
-    // #ifdef H5
-    url = apis['user']['getWebToken'][1];
-    // #endif
-    // #ifndef H5
-    url = apis['user']['getToken'][1];
-    // #endif
-    const e = await newFly
-    .post(url, qs.stringify({ code: code }));
+    const e = await ApiGetToken(qs.stringify({ code: code }), newFly)
     const data = e && e.data ? e.data : {};
     log('Login', data);
     if (data.code === 200 && data.data['token']) {
       store.commit('SET_TOKEN', data.data['token']);
-      fly.unlock();
+      request.unlock();
       return fn(data);
     }
-    fly.unlock();
+    request.unlock();
     return null;
   } catch (e) {
     return e;

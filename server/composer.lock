@@ -8,16 +8,16 @@
     "packages": [
         {
             "name": "zls/action",
-            "version": "v1.2.7.5",
+            "version": "v1.2.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sohaha/ZlsPHP-Action.git",
-                "reference": "3f9df8d059b4d3d387321781711316d4be012fe1"
+                "reference": "c2da577e4feea487a4361c917d9fb07cd743912b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sohaha/ZlsPHP-Action/zipball/3f9df8d059b4d3d387321781711316d4be012fe1",
-                "reference": "3f9df8d059b4d3d387321781711316d4be012fe1",
+                "url": "https://api.github.com/repos/sohaha/ZlsPHP-Action/zipball/c2da577e4feea487a4361c917d9fb07cd743912b",
+                "reference": "c2da577e4feea487a4361c917d9fb07cd743912b",
                 "shasum": "",
                 "mirrors": [
                     {
@@ -42,7 +42,7 @@
                     "email": "seekwe@gmail.com"
                 }
             ],
-            "time": "2019-12-12T11:08:22+00:00"
+            "time": "2019-12-23T06:10:19+00:00"
         },
         {
             "name": "zls/cache",
@@ -84,16 +84,16 @@
         },
         {
             "name": "zls/command",
-            "version": "v1.2.4.2",
+            "version": "v1.2.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sohaha/ZlsPHP-Command.git",
-                "reference": "9fb8e6633b335f35d288451c11b53bf4f6818c62"
+                "reference": "297f3f5bd657496a9ec91b7b84e01d3f212a67fd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sohaha/ZlsPHP-Command/zipball/9fb8e6633b335f35d288451c11b53bf4f6818c62",
-                "reference": "9fb8e6633b335f35d288451c11b53bf4f6818c62",
+                "url": "https://api.github.com/repos/sohaha/ZlsPHP-Command/zipball/297f3f5bd657496a9ec91b7b84e01d3f212a67fd",
+                "reference": "297f3f5bd657496a9ec91b7b84e01d3f212a67fd",
                 "shasum": "",
                 "mirrors": [
                     {
@@ -121,20 +121,20 @@
                     "email": "seekwe@gmail.com"
                 }
             ],
-            "time": "2019-09-20T07:28:52+00:00"
+            "time": "2019-12-20T11:42:26+00:00"
         },
         {
             "name": "zls/dao",
-            "version": "v1.1.7",
+            "version": "v1.1.11",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sohaha/ZlsPHP-Dao.git",
-                "reference": "a5b701fcf65dba7f71f8925354252d8f4081dfef"
+                "reference": "1456da6dae092ca5415615d906d43803b97af263"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sohaha/ZlsPHP-Dao/zipball/a5b701fcf65dba7f71f8925354252d8f4081dfef",
-                "reference": "a5b701fcf65dba7f71f8925354252d8f4081dfef",
+                "url": "https://api.github.com/repos/sohaha/ZlsPHP-Dao/zipball/1456da6dae092ca5415615d906d43803b97af263",
+                "reference": "1456da6dae092ca5415615d906d43803b97af263",
                 "shasum": "",
                 "mirrors": [
                     {
@@ -162,20 +162,20 @@
                     "email": "seekwe@gmail.com"
                 }
             ],
-            "time": "2019-11-13T11:06:20+00:00"
+            "time": "2020-05-07T09:21:23+00:00"
         },
         {
             "name": "zls/framework",
-            "version": "v2.4.4",
+            "version": "v2.5.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sohaha/ZlsPHP-Framework.git",
-                "reference": "e2f535c14ecb6aa4981e5680a0561c42eec1b416"
+                "reference": "857b488e27c37aacfdc0a096afdd028145bc28e6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sohaha/ZlsPHP-Framework/zipball/e2f535c14ecb6aa4981e5680a0561c42eec1b416",
-                "reference": "e2f535c14ecb6aa4981e5680a0561c42eec1b416",
+                "url": "https://api.github.com/repos/sohaha/ZlsPHP-Framework/zipball/857b488e27c37aacfdc0a096afdd028145bc28e6",
+                "reference": "857b488e27c37aacfdc0a096afdd028145bc28e6",
                 "shasum": "",
                 "mirrors": [
                     {
@@ -204,20 +204,20 @@
                     "email": "seekwe@gmail.com"
                 }
             ],
-            "time": "2019-12-18T07:01:53+00:00"
+            "time": "2020-07-26T11:15:36+00:00"
         },
         {
             "name": "zls/logger",
-            "version": "v1.1.6",
+            "version": "v1.1.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sohaha/ZlsPHP-Logger.git",
-                "reference": "b8e2a7026b10cf93638c12f704732a6f586cc0bc"
+                "reference": "e5c2ee2146977256756aeeb5371231ce034ca401"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sohaha/ZlsPHP-Logger/zipball/b8e2a7026b10cf93638c12f704732a6f586cc0bc",
-                "reference": "b8e2a7026b10cf93638c12f704732a6f586cc0bc",
+                "url": "https://api.github.com/repos/sohaha/ZlsPHP-Logger/zipball/e5c2ee2146977256756aeeb5371231ce034ca401",
+                "reference": "e5c2ee2146977256756aeeb5371231ce034ca401",
                 "shasum": "",
                 "mirrors": [
                     {
@@ -242,7 +242,7 @@
                     "email": "seekwe@gmail.com"
                 }
             ],
-            "time": "2019-06-17T08:03:01+00:00"
+            "time": "2019-12-26T09:12:34+00:00"
         },
         {
             "name": "zls/manage",
@@ -369,16 +369,16 @@
         },
         {
             "name": "zls/wechat",
-            "version": "v1.1.12",
+            "version": "v1.1.14",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sohaha/zls-wechat.git",
-                "reference": "02fddfd705c88bd04e100113183b496cdb91a166"
+                "reference": "33d5f82f8d96a8dada9090156953744258566526"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sohaha/zls-wechat/zipball/02fddfd705c88bd04e100113183b496cdb91a166",
-                "reference": "02fddfd705c88bd04e100113183b496cdb91a166",
+                "url": "https://api.github.com/repos/sohaha/zls-wechat/zipball/33d5f82f8d96a8dada9090156953744258566526",
+                "reference": "33d5f82f8d96a8dada9090156953744258566526",
                 "shasum": "",
                 "mirrors": [
                     {
@@ -408,7 +408,7 @@
                 }
             ],
             "description": "wechat develop, Support WeChat, Work WeChat, WeChat open platform",
-            "time": "2019-12-16T09:57:17+00:00"
+            "time": "2020-01-13T11:15:49+00:00"
         }
     ],
     "packages-dev": [],

@@ -24,3 +24,4 @@ yarn-error.log*
 
 
 src/common/app.css
+private.key

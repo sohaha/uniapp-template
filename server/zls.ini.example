@@ -30,13 +30,15 @@ database = ''
 ; 表前缀
 tablePrefix = ''
 
-[wechat]
+[weapp]
 token = ''
-appid = 'wx55a57ece23099d67'
-appsecret = 'ec5985f60f7f9e995e8d914fa1470284'
+appid = ''
+appsecret = ''
 corpid = ''
 agentid = ''
 encodingAesKey = ''
 componentAppid = ''
 componentAppsecret = ''
 debug = 1
+MINI_APPID=''
+MINI_UPLOAD_PRIVATE_KEY=''

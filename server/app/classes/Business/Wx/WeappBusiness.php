@@ -1,4 +1,10 @@
 <?php
+/*
+ * @Author: seekwe
+ * @Date: 2020-07-29 16:54:03
+ * @Last Modified by:: seekwe
+ * @Last Modified time: 2020-07-30 17:04:51
+ */
 declare(strict_types=1);
 
 namespace Business\Wx;
@@ -8,6 +14,12 @@ use Zls\WeChat\Main;
 
 class WeappBusiness extends WxBusiness
 {
+    public function __construct()
+    {
+        parent::__construct();
+        $this->wx->init(z::config("weapp"));
+    }
+
     /**
      * 获取用户 OPENID
      *

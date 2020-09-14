@@ -88,7 +88,9 @@ export default {
 			}
 		},
 		goLogin() {
-			this.$go('user/login', true);
+			this.$go('user/login', true).then(e=>{
+				console.log(e)
+			})
 		}
 	}
 };

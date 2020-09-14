@@ -1,3 +1,9 @@
+/*
+ * @Author: seekwe
+ * @Date: 2020-07-29 16:54:03
+ * @Last Modified by:: seekwe
+ * @Last Modified time: 2020-07-30 16:53:34
+ */ 
 /**
  * @Author: seekwe
  * @Date:   2019-11-11 15:10:32
@@ -6,7 +12,7 @@
  */
 import { ajax } from './index';
 import { getToken } from './index';
-import { fly } from './index';
+import { request } from './index';
 import $store from '../store';
 import util from '@/common/util';
 
@@ -15,26 +21,26 @@ export default {
     const token = $store.getters.token;
     const authStatus = $store.getters.authStatus;
     if (!token || !authStatus) {
-      fly.lock();
+      request.lock();
     }
     if (!token) {
       // token 都没有，需要再次获取
       await getToken(_ => {
         util.$log('session_key 已重新获取');
-        fly.unlock();
+        request.unlock();
       });
     } else if (!authStatus) {
       // 本地还没获取过用户信息，需要保证 session_key 有效期
       wx.checkSession({
         async success () {
-          fly.unlock();
+          request.unlock();
           util.$log('session_key 未过期');
         },
         async fail () {
           util.$log('session_key 已经失效');
           await getToken(_ => {
             util.$log('session_key 已重新获取');
-            fly.unlock();
+            request.unlock();
           });
         }
       });

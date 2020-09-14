@@ -1,10 +1,17 @@
 {
+  "include": ["src/**/*"],
+  "exclude": ["node_modules"],
+  "files": ["main.ts"],
   "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"]
+    },
     "types": [
-      "uni-app",
-      "html5plus",
-      "miniprogram-api-typings/types/lib.wx.api.d.ts",
-      "mini-types/types/api"
+      "@dcloudio/types",
+      "weixin-app",
+      "miniprogram-api-typings",
+      "mini-types"
     ]
   }
 }

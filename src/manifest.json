@@ -56,12 +56,13 @@
   /* 快应用特有相关 */
   "mp-weixin": {
     /* 微信小程序特有相关 */
-    "appid": "wx55a57ece23099d67",
+    "appid": "wx88633add4de4af63",
     "plugins": {},
     "setting": {
       "urlCheck": false,
       "es6": false,
-      "enhance": false
+      "enhance": false,
+      "checkSiteMap":false
     },
     "optimization": {
       "subPackages": true
