@@ -12,8 +12,8 @@ if (process.env.NODE_ENV !== 'development') {
   apiHost = 'http://weapp.test'; // 接口域名
   websiteUrl = 'http://weapp.test'; // 静态资源域名
 } else {
-  apiHost = 'http://127.0.0.1:3780'; // 测试接口域名
-  websiteUrl = 'http://127.0.0.1:3780'; // 测试静态资源域名
+  apiHost = 'http://127.0.0.1:3783'; // 测试接口域名
+  websiteUrl = 'http://127.0.0.1:3783'; // 测试静态资源域名
 }
 
 export default {
