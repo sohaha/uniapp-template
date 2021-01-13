@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Business\ZlsManage;
@@ -16,7 +17,41 @@ use Zls\Action\StrUtils;
  */
 class UserBusiness extends \Zls_Business
 {
+    public const EXPIRE_TIME = 60 * 60 * 1;
     public const USER_CACHE_KEY = 'USER_CACHE_KEY_';
+
+    private $TOKEN_INFO;
+    private static $TokenDao = null;
+
+    public function __construct()
+    {
+        self::$TokenDao = self::$TokenDao ?: (new TokenDao);
+    }
+
+    /**
+     * token 是否过期
+     *
+     * @param $token
+     *
+     * @return bool
+     */
+    public function isExpire(): bool
+    {
+        $tokenid = $this->TOKEN_INFO['id'];
+        $start  = time();
+        $end    = strtotime($this->TOKEN_INFO['update_time']);
+        $diff   = $start - $end;
+        if ($diff > self::EXPIRE_TIME) {
+            $this->clearToken($tokenid);
+            return false;
+        }
+
+        self::$TokenDao->update([
+            'update_time' => date('Y-m-d H:i:s'),
+        ], $tokenid);
+
+        return true;
+    }
 
     /**
      * 根据token获取用户信息
@@ -25,19 +60,23 @@ class UserBusiness extends \Zls_Business
      *
      * @return array
      */
-    public function tokenToInfo($token): array
+    public function tokenToInfo($tokenid): array
     {
         /** @var TokenDao $tokenDao */
-        $tokenDao = new TokenDao();
+        $tokenDao = self::$TokenDao;
         $user     = [];
-        if ($tokenInfo = $tokenDao->find(['token' => $token, 'status' => 1], false, [])) {
+        if ($tokenInfo = $tokenDao->find(['id' => $tokenid, 'status' => 1], false, [])) {
+            $this->TOKEN_INFO = $tokenInfo;
             $user            = $this->info((int)$tokenInfo['userid']);
+            $user['isSuper'] = $this->isSuperAdmin($user);
             $GroupBusiness   = new GroupBusiness();
             $groupid         = explode(',', (string)$user['group_id']);
             $user['groups']  = $GroupBusiness->all();
-            $user['menus']   = $GroupBusiness->getMenu($groupid);
+            $user['menus']   = $GroupBusiness->getMenu($groupid, $user['isSuper']);
             $user['marks']   = $GroupBusiness->getMarks($groupid);
             $user['routers'] = $GroupBusiness->getRouter($groupid);
+
+            $user['menu'] = $GroupBusiness->getMenus($user);
         }
 
         return $user;
@@ -88,14 +127,24 @@ class UserBusiness extends \Zls_Business
     {
         /** @var Id $ActionId */
         $ActionId = z::extension('Action\Id');
+        $tokenDao = self::$TokenDao;
+        $that = $this;
 
         return z::tap(
-            Z::encrypt($id . '_' . date('y-m-d H:i:s') . '_' . $ActionId->uniqueId(4)),
-            static function ($token) use ($id) {
-                $tokenDao = new TokenDao();
-                $tokenDao->saveToken($id, $token);
+            $tokenDao->saveToken($id, ''),
+            static function ($tokenid) use ($id, $ActionId, $tokenDao, $that) {
+                $token = Z::encrypt($id . '_' . date('y-m-d H:i:s') . '_' . $ActionId->uniqueId(4) . '_' . $tokenid);
+                $tokenDao->update([
+                    'token' => $token
+                ], $tokenid);
                 $dao = new LogsDao();
                 $dao->createOperationLog($id, null, '登录成功，欢迎回来！', $id, $dao::TYPE_NORMAL, $dao::STATUS_READ);
+
+                $config = z::config('ini', true, []);
+                if (z::arrayGet($config['base'], 'loginMode', false)) {
+                    $that->clearAllToken($id, [$tokenid]);
+                }
+                return $token;
             }
         );
     }
@@ -107,9 +156,9 @@ class UserBusiness extends \Zls_Business
      *
      * @return bool|int
      */
-    public function clearToken($token)
+    public function clearToken($tokenid)
     {
-        return (new TokenDao())->update(['status' => 2], ['status' => 1, 'token' => $token]);
+        return self::$TokenDao->update(['status' => 2], ['status' => 1, 'id' => $tokenid]);
     }
 
     /**
@@ -119,9 +168,43 @@ class UserBusiness extends \Zls_Business
      *
      * @return bool|int
      */
-    public function clearAllToken($userid)
+    public function clearAllToken($userid, $exclude = [])
     {
-        return (new TokenDao())->update(['status' => 2], ['status' => 1, 'userid' => $userid]);
+        $where = ['status' => 1, 'userid' => $userid];
+        if ($exclude) {
+            $where['id not'] = $exclude;
+        }
+        return self::$TokenDao->update(['status' => 2], $where);
+    }
+
+    /**
+     * 单点登录
+     *
+     * @return bool|int
+     */
+    public function clearAllTokenSaveLastId($userID, $tokenID)
+    {
+        $db = self::$TokenDao->getDb();
+
+        $db->select('MAX(id) as id')
+            ->from(self::$TokenDao->getTable())
+            ->where([
+                'userid !=' => $userID,
+                'status' => 1
+            ])
+            ->groupBy('userid');
+
+        $rs = $db->execute()->rows();
+
+        $ids = [$tokenID];
+        foreach ($rs as $key => $value) {
+            $ids[] = $value['id'];
+        }
+
+        return self::$TokenDao->update(['status' => 2], [
+            'id not' => $ids,
+            'status' => 1,
+        ]);
     }
 
     /**
@@ -158,6 +241,11 @@ class UserBusiness extends \Zls_Business
         if (!$user = $dao->find($id, false, [], 'key,id,email')) {
             return '用户不存在';
         }
+
+        if (is_array($data['group_id'])) {
+            $data['group_id'] = implode(',', $data['group_id']);
+        }
+
         $userid    = $user['id'];
         $veriField = ['status', 'remark', 'avatar', 'nickname'];
         $email     = z::arrayGet($data, 'email');
@@ -208,6 +296,9 @@ class UserBusiness extends \Zls_Business
     {
         $dao     = new UserDao();
         $map     = $dao->getReversalColumns(['id']);
+        if (is_array($data['group_id'])) {
+            $data['group_id'] = implode(',', $data['group_id']);
+        }
         $rule    = $dao->verifyRules(array_keys($data));
         $retData = $errorMsg = $errorKey = null;
         if (z::checkData($data, $rule, $retData, $errorMsg, $errorKey, $dao->getDb())) {
@@ -340,18 +431,18 @@ class UserBusiness extends \Zls_Business
      *
      * @return array
      */
-    public function getLast($userid, $token): array
+    public function getLast($userid, $tokenid): array
     {
-        $tokenDao = new TokenDao();
+        $tokenDao = self::$TokenDao;
         $field    = ['ip', 'ua', 'create_time'];
-        $last     = $tokenDao->find(['userid' => $userid, 'token !=' => $token], false, ['id' => 'desc'], $field);
+        $last     = $tokenDao->find(['userid' => $userid, 'id !=' => $tokenid], false, ['id' => 'desc'], $field);
 
         return z::readData($field, $last);
     }
 
     public function getTokenLists($userid, $showToken = false): array
     {
-        $tokenDao = new TokenDao();
+        $tokenDao = self::$TokenDao;
         $field    = ['ip', 'ua', 'create_time'];
         if ($showToken) {
             $field[] = 'token';
@@ -364,15 +455,37 @@ class UserBusiness extends \Zls_Business
     /**
      * 是否超级管理员
      *
+     * @param array $user
+     *
+     * @return boolean
+     */
+    public function isSuperAdmin(&$user): bool
+    {
+        $userid = (int)$user['id'];
+        // $superAdminIds = z::config('ini.manage.superAdmin', true, [1]);
+        $superAdminIds = [];
+
+        $isSuper = in_array($userid, $superAdminIds, true) || (bool)z::arrayGet($user, 'is_super', false);
+        if (z::arrayKeyExists('is_super', $user)) {
+            unset($user['is_super']);
+        }
+
+        return $isSuper;
+    }
+
+    /**
+     * 是否超级管理员
+     *
      * @param int $userid
      *
      * @return boolean
      */
-    public function isSuperAdmin(int $userid): bool
+    public function isSuperAdminById(int $userid): bool
     {
-        $superAdminIds = z::config('ini.manage.superAdmin', true, [1]);
+        $user       = $this->info($userid);
+        $isSuper    = $this->isSuperAdmin($user);
 
-        return in_array($userid, $superAdminIds, true);
+        return $isSuper;
     }
 
     public function info($userid): array
@@ -386,5 +499,20 @@ class UserBusiness extends \Zls_Business
 
             return null;
         }) ?: [];
+    }
+
+    /**
+     * 是否频繁请求登录
+     * @param int $total 限制次数
+     * @return bool
+     */
+    public function isBusyLogin($total = 10): bool
+    {
+        $ip = Z::clientIp();
+        $key = 'sys::recordBusyLogin_' . $ip;
+        $cache = Z::cache();
+        $t = (int)$cache->get($key);
+        $cache->set($key, $t + 1, 20);
+        return $t >= $total;
     }
 }

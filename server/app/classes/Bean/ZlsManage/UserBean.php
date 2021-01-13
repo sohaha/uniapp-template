@@ -27,7 +27,7 @@ class UserBean extends \Zls_Bean
         }
         /** @var UserBusiness $UserBusiness */
         $UserBusiness = Z::business('ZlsManage\UserBusiness');
-        if ($UserBusiness->isSuperAdmin($this->id)) {
+        if ($UserBusiness->isSuperAdminById((int)$this->id)) {
             $names[0] = '超级管理员';
         }
 
@@ -37,5 +37,21 @@ class UserBean extends \Zls_Bean
     public function getStatus(): int
     {
         return (int)$this->status;
+    }
+
+    public function getGroupId(): array
+    {
+        $group2Arr = function ($groupID) {
+            $temp = explode(',', $groupID);
+            $re   = [];
+
+            foreach ($temp as $v) {
+                $re[] = (int)$v;
+            }
+
+            return $re;
+        };
+
+        return $group2Arr($this->group_id);
     }
 }

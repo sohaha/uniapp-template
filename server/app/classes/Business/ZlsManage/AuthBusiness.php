@@ -1,20 +1,12 @@
 <?php
-declare (strict_types=1);
+
+declare(strict_types=1);
 
 namespace Business\ZlsManage;
 
 use Dao\ZlsManage\RulesRelaDao;
 use z;
 
-/**
- * Zls
- * @author        影浅
- * @email         seekwe@gmail.com
- * @copyright     Copyright (c) 2015 - 2017, 影浅, Inc.
- * @link          ---
- * @since         v0.0.1
- * @updatetime    2018-11-08 17:55
- */
 class AuthBusiness extends \Zls_Business
 {
     /**
@@ -31,73 +23,106 @@ class AuthBusiness extends \Zls_Business
     {
         $router = Z::arrayGet($condition, 'router', '');
         if (!is_array($user)) {
-            $user = (new UserBusiness())->info((int)$user);
+            $user = (new UserBusiness())->info((int) $user);
         }
         if (!$user) {
             return ['title' => '未知用户', 'router' => $router];
         }
-        // 标识码优先级最高，一旦标识码匹配成功即忽略路由匹配
+        // 先路由，后标识码补充
         $marks           = Z::arrayGet($regular, 'marks', []);
         $permission      = Z::arrayGet($condition, 'permission', []);
         $classPermission = Z::arrayGet($condition, 'classPermission', []);
         $adopt           = false;
-        // 不需要条件那么就应该是默认拥有权限了
-        if (!$permission) {
-            $adopt = true;
-        } else {
-            foreach ($permission as $p) {
-                if (in_array($p, $marks, true)) {
-                    $adopt = true;
-                    if ($singlePermission) {
-                        break;
+        $routers         = Z::arrayGet($regular, 'routers', []);
+
+        $ban = ['title' => '没有找到匹配规则', 'router' => $router];
+
+        $fullRouter = $this->getFullRequestPath($router);
+
+        foreach ($routers as $rules) {
+            $rule = explode("\n", $rules['mark']);
+            foreach ($rule as $key => $value) {
+                // 正则路由
+                if ($this->verify($fullRouter, $value, $rules['condition'], $user)) {
+                    if ($rules['status'] == RulesRelaDao::STATUS_BAN) {
+                        $adopt  = false;
+                        break 2;
                     }
-                } else {
-                    $adopt = false;
+                    $adopt      = true;
                 }
+
+                $ban['router']  = $value;
             }
-            if ($classPermission) {
-                foreach ($classPermission as $p) {
-                    if (!in_array($p, $marks, true)) {
-                        $adopt = false;
-                        break;
-                    }
+        }
+
+        $adoptRoute = [
+            "PUT" => [
+                "/ZlsManage/UserApi/EditPassword.go"
+            ],
+            "POST" => [
+                "/ZlsManage/UserApi/GetToken.go",
+                "/ZlsManage/UserApi/ClearToken.go"
+            ],
+            "GET" => [
+                "/ZlsManage/UserApi/UnreadMessageCount.go",
+                "/ZlsManage/UserApi/UseriInfo.go",
+                "/ZlsManage/UserManageApi/UserLists.go",
+                "/ZlsManage/UserApi/Logs.go"
+            ]
+        ];
+        if ($user['group_id'] == 1) {
+            $adoptRoute['GET'] = array_merge([], $adoptRoute['GET'], [
+                "/ZlsManage/SystemApi/SystemConfig.go",
+                "/ZlsManage/SystemApi/SystemLogs.go"
+            ]);
+            $adoptRoute['POST'] = array_merge([], $adoptRoute['POST'], [
+                "/ZlsManage/MenuApi/UserMenu.go"
+            ]);
+        }
+
+        $req = strtolower(z::arrayGet($_SERVER, 'REQUEST_METHOD', ''));
+        foreach ($adoptRoute as $aReq => $aRoute) {
+            if (strtolower($aReq) !== $req) {
+                continue;
+            }
+
+            foreach ($aRoute as $r) {
+                if ($this->verify($fullRouter, $r, '', $user)) {
+                    $adopt  = true;
                 }
             }
         }
-        $ban = ['title' => '没有找到匹配规则', 'router' => $router];
-        // 标识码匹配不到，开始匹配路由
-        if (!$adopt) {
-            $routers      = Z::arrayGet($regular, 'routers', []);
-            $rules        = [];
-            $banRules     = [];
-            $rulesRelaDao = new RulesRelaDao();
-            $normalState  = $rulesRelaDao::STATUS_NORMAL;
-            $banState     = $rulesRelaDao::STATUS_BAN;
-            foreach ($routers as $r) {
-                if ($r['status'] === $normalState) {
-                    $rules[] = $r;
-                } elseif ($r['status'] === $banState) {
-                    $banRules[] = $r;
-                }
-            }
-            foreach ($rules as $rule) {
-                if ($this->verify($router, $rule['mark'], $rule['condition'], $user)) {
-                    $adopt = true;
-                    break;
-                }
-            }
-            if ($adopt) {
-                foreach ($banRules as $rule) {
-                    if ($this->verify($router, $rule['mark'], $rule['condition'], $user)) {
+
+        // 不需要条件那么就应该是默认拥有权限了
+        // 先标识码方法, 在标识码类
+        if ($adopt) {
+            if ($permission || $classPermission) {
+
+                foreach ($permission as $p) {
+                    if (in_array($p, $marks, true)) {
+                        if ($singlePermission) {
+                            break;
+                        }
+                    } else {
                         $adopt = false;
-                        $ban   = $rule;
+                        break;
+                    }
+                }
+
+                foreach ($classPermission as $p) {
+                    if (in_array($p, $marks, true)) {
+                        if ($singlePermission) {
+                            break;
+                        }
+                    } else {
+                        $adopt = false;
                         break;
                     }
                 }
             }
         }
 
-        return (bool)$adopt ?: $ban;
+        return (bool) $adopt ?: $ban;
     }
 
     private function verify($router, $rule, $condition, $user)
@@ -133,5 +158,17 @@ class AuthBusiness extends \Zls_Business
         //     }
         // }
         return $rs;
+    }
+
+    private function getFullRequestPath($router)
+    {
+        $methodUriSubfix = (z::config())->getMethodUriSubfix();
+
+        $router = '/' . $router;
+        if (substr($router, -3) !== $methodUriSubfix) {
+            return $router . $methodUriSubfix;
+        }
+
+        return $router;
     }
 }

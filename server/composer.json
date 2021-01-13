@@ -37,7 +37,7 @@
     "zls/dao": ">=1.0.0",
     "zls/framework": ">=1.0.0",
     "zls/logger": ">=1.0.0",
-    "zls/manage": "^0.0.53",
+    "zls/manage": "^0.2.4",
     "zls/migration": "v1.1.6.2",
     "zls/session": ">=1.0.0",
     "zls/wechat": "^1.1"

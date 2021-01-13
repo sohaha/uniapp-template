@@ -1,5 +1,6 @@
 <?php
-declare (strict_types=1);
+
+declare(strict_types=1);
 
 namespace Business\ZlsManage;
 
@@ -84,7 +85,32 @@ class RulesBusiness extends \Zls_Business
         $rules   = $dao->verifyRules(array_keys($data));
         $retData = $errorMsg = $errorKey = null;
         if (z::checkData($data, $rules, $retData, $errorMsg, $errorKey)) {
-            $id = $dao->insert($retData);
+            // if (strpos(z::arrayGet($retData, 'mark', ''), ',') !== false) {
+            //     $markArr = explode(',', $retData['mark']);
+            //     $batchData = [];
+            //     foreach ($markArr as $key => $value) {
+            //         if (trim($value)) {
+            //             $batchData[] = [
+            //                 'title'     => $retData['title'],
+            //                 'mark'      => $value,
+            //                 'remark'    => $retData['remark'],
+            //                 'type'      => $retData['type'],
+            //                 'create_time' => date('Y-m-d H:i:s'),
+            //                 'update_time' => date('Y-m-d H:i:s'),
+            //             ];
+            //         }
+            //     }
+            //     if (!$batchData) {
+            //         return '已存在';
+            //     }
+
+            //     $id = $dao->insertBatch($batchData);
+            // } else {
+            $id = $dao->insert($retData + [
+                'create_time' => date('Y-m-d H:i:s'),
+                'update_time' => date('Y-m-d H:i:s'),
+            ]);
+            // }
 
             return $id ? ['id' => $id] : '添加失败';
         }
@@ -127,6 +153,9 @@ class RulesBusiness extends \Zls_Business
      */
     public function deteleRules($id)
     {
+        (new RulesRelaDao())->delete([], [
+            'rule_id' => $id
+        ]);
         return (new RulesDao())->delete($id);
     }
 }

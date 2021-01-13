@@ -1,5 +1,6 @@
 <?php
-declare (strict_types=1);
+
+declare(strict_types=1);
 
 namespace Business\ZlsManage;
 
@@ -144,7 +145,7 @@ class AssistBusiness extends \Zls_Business
      *
      * @return bool
      */
-    public function updateMessageStatus($ids, $uid = 0): bool
+    public function updateMessageStatus($ids, $uid = 0)
     {
         $logsDao = new LogsDao();
 
@@ -165,6 +166,7 @@ class AssistBusiness extends \Zls_Business
             'debug'        => (bool)z::arrayGet($config, 'base.debug', true),
             'cdnHost'      => z::arrayGet($config, 'project.cdnHost', ''),
             'maintainMode' => (bool)z::arrayGet($config, 'base.maintainMode', true),
+            'loginMode'    => (bool)z::arrayGet($config, 'base.loginMode', false),
             'ipWhitelist'  => implode(',', z::arrayGet($config, 'base.ipWhitelist', [])),
         ];
 
@@ -175,16 +177,19 @@ class AssistBusiness extends \Zls_Business
      * 更新系统配置
      *
      * @param array $data
+     * @param int   $userID
+     * @param int   $tokenID
      *
      * @return bool
      */
-    public function updateSystemConfig(array $data): bool
+    public function updateSystemConfig(array $data, int $userID, int $tokenID): bool
     {
         $config = z::config('ini', true, []);
         // 根据实际情况从$data读取需要的数据
         $config['base']['debug']        = z::arrayGet($data, 'debug');
         $config['project']['cdnHost']   = z::arrayGet($data, 'cdnHost');
         $config['base']['maintainMode'] = z::arrayGet($data, 'maintainMode');
+        $config['base']['loginMode']    = z::arrayGet($data, 'loginMode');
         $config['base']['ipWhitelist']  = explode(';', z::arrayGet($data, 'ipWhitelist', ''));
         /**
          * @var Ini $Ini
@@ -192,7 +197,11 @@ class AssistBusiness extends \Zls_Business
         $Ini  = z::extension('Action\Ini');
         $path = z::realPath('zls.ini', false, false);
 
-        return !!@file_put_contents($path, $Ini->extended($config));
+        return  (bool)z::tap(!!@file_put_contents($path, $Ini->extended($config)), function ($value) use ($config, $userID, $tokenID) {
+            if ($config['base']['loginMode']) {
+                (new UserBusiness)->clearAllTokenSaveLastId($userID, $tokenID);
+            }
+        });
     }
 
     /**
@@ -201,6 +210,14 @@ class AssistBusiness extends \Zls_Business
      */
     public function getSystemInfo(): array
     {
+        $sysInfo = [];
+        switch (PHP_OS) {
+            case "Linux":
+                $sysInfo = $this->sysLinux();
+                break;
+            default:
+                break;
+        }
         /** @noinspection PhpComposerExtensionStubsInspection */
         $data = [
             'hostname'          => z::hostname(),
@@ -210,7 +227,18 @@ class AssistBusiness extends \Zls_Business
             'software'          => z::server('SERVER_SOFTWARE'),
             'extensions'        => join(' ', get_loaded_extensions()),
             'disable_functions' => join(' ', explode(',', ini_get('disable_functions'))),
+            'total_space'       => z::convertRam(disk_total_space(z::realPath('.', true, false))),
             'free_space'        => z::convertRam(disk_free_space(z::realPath('.', true, false))),
+            'memory'            => [
+                'total' => z::convertRam(z::arrayGet($sysInfo, 'memTotal', 0)),
+                'used'  => z::convertRam(z::arrayGet($sysInfo, 'memUsed', 0)),
+                'free'  => z::convertRam(z::arrayGet($sysInfo, 'memFree', 0)),
+                'usage' => z::arrayGet($sysInfo, 'memPercent', 0),
+            ],
+            'disk'              => [
+                'total' => z::convertRam(disk_total_space(z::realPath('.', true, false))),
+                'free'  => z::convertRam(disk_free_space(z::realPath('.', true, false))),
+            ],
             'composer'          => z::tap(json_decode(@file_get_contents(z::realPath('composer.lock', false, false)), true), function (&$composer) {
                 $composer = z::arrayGet($composer, 'packages', []);
                 $composer = z::arrayFilter(z::arrayValues($composer, ['name', 'version']), function ($v) {
@@ -226,5 +254,34 @@ class AssistBusiness extends \Zls_Business
         ];
 
         return $data;
+    }
+
+    private function sysLinux()
+    {
+        if (false === ($str = @file("/proc/meminfo"))) {
+            return false;
+        }
+        $str = implode("", $str);
+
+        preg_match_all("/MemTotal\s{0,}\:+\s{0,}([\d\.]+).+?MemFree\s{0,}\:+\s{0,}([\d\.]+).+?Cached\s{0,}\:+\s{0,}([\d\.]+).+?SwapTotal\s{0,}\:+\s{0,}([\d\.]+).+?SwapFree\s{0,}\:+\s{0,}([\d\.]+)/s", $str, $buf);
+
+        $res['memTotal'] = round($buf[1][0] * 1024, 2);
+        $res['memFree'] = round($buf[2][0] * 1024, 2);
+        $res['memCached'] = round($buf[3][0] * 1024, 2);
+        $res['memUsed'] = $res['memTotal'] - $res['memFree'];
+        $res['memPercent'] = (floatval($res['memTotal']) != 0) ? round($res['memUsed'] / $res['memTotal'] * 100, 2) : 0;
+
+        // $res['memRealUsed'] = $res['memTotal'] - $res['memFree'] - $res['memCached'] - $res['memBuffers']; //真实内存使用
+        // $res['memRealFree'] = $res['memTotal'] - $res['memRealUsed']; //真实空闲
+        // $res['memRealPercent'] = (floatval($res['memTotal']) != 0) ? round($res['memRealUsed'] / $res['memTotal'] * 100, 2) : 0; //真实内存使用率
+
+        // $res['memCachedPercent'] = (floatval($res['memCached']) != 0) ? round($res['memCached'] / $res['memTotal'] * 100, 2) : 0; //Cached内存使用率
+
+        // $res['swapTotal'] = round($buf[4][0] / 1024, 2);
+        // $res['swapFree'] = round($buf[5][0] / 1024, 2);
+        // $res['swapUsed'] = round($res['swapTotal'] - $res['swapFree'], 2);
+        // $res['swapPercent'] = (floatval($res['swapTotal']) != 0) ? round($res['swapUsed'] / $res['swapTotal'] * 100, 2) : 0;
+
+        return $res;
     }
 }

@@ -25,21 +25,37 @@ class Users extends M
         $table->addColumn('avatar', self::TYPE_STRING, [self::OPTIONS_DEFAULT => '', self::OPTIONS_COMMENT => '头像']);
         $table->addColumn('status', self::TYPE_INTEGER, [self::OPTIONS_DEFAULT => 0, 'limit' => MysqlAdapter::INT_TINY, self::OPTIONS_COMMENT => '状态:-1软删除,0待激活,1正常,2禁止']);
         $table->addColumn('group_id', self::TYPE_STRING, [self::OPTIONS_DEFAULT => '', 'limit' => MysqlAdapter::TEXT_SMALL, self::OPTIONS_COMMENT => '角色Id']);
+        $table->addColumn('is_super', self::TYPE_INTEGER, [self::OPTIONS_DEFAULT => 0, 'limit' => MysqlAdapter::INT_TINY, self::OPTIONS_COMMENT => '']);
         $table->addColumn('create_time', self::TYPE_DATETIME, [self::OPTIONS_DEFAULT => null, self::OPTIONS_NULL => true, self::OPTIONS_COMMENT => '创建时间']);
         $table->addColumn('update_time', self::TYPE_DATETIME, [self::OPTIONS_DEFAULT => null, self::OPTIONS_NULL => true, self::OPTIONS_COMMENT => '更新时间']);
         $table->addIndex(['username', 'status'], ['name' => 'username_status']);
         $table->create();
         /** @var StrUtils $StrUtils */
         $StrUtils = z::extension('Action\StrUtils');
-        $key      = $StrUtils->randString();
         $time     = date('Y-m-d H:i:s');
         // 随机生成用户密码
         $userPassword = $StrUtils->randString(6, 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789');
+        $key      = $StrUtils->randString();
+        $rows[]       = [
+            'username'    => 'manage',
+            'key'         => $key,
+            'status'      => 1,
+            'group_id'    => 1,
+            'is_super'    => 1,
+            'nickname'    => '超级管理员',
+            'email'       => 'admin@qq.com',
+            'password'    => md5(Z::encrypt($userPassword, '', $key)),
+            'create_time' => $time,
+            'update_time' => $time,
+        ];
+        $key      = $StrUtils->randString();
         $rows[]       = [
             'username'    => 'admin',
             'key'         => $key,
             'status'      => 1,
             'group_id'    => 1,
+            'is_super'    => 0,
+            'nickname'    => '管理员',
             'email'       => 'admin@qq.com',
             'password'    => md5(Z::encrypt($userPassword, '', $key)),
             'create_time' => $time,
@@ -51,6 +67,8 @@ class Users extends M
             'key'         => $key,
             'status'      => 1,
             'group_id'    => 2,
+            'is_super'    => 0,
+            'nickname'    => '编辑',
             'email'       => 'seekwe@gmail.com',
             'password'    => md5(Z::encrypt($userPassword, '', $key)),
             'create_time' => $time,

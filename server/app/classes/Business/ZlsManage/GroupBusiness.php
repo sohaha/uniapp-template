@@ -3,6 +3,8 @@
 namespace Business\ZlsManage;
 
 use Dao\ZlsManage\GroupDao;
+use Dao\ZlsManage\GroupMenuDao;
+use Dao\ZlsManage\MenuDao;
 use Dao\ZlsManage\RulesDao;
 use Dao\ZlsManage\RulesRelaDao;
 use Dao\ZlsManage\UserDao;
@@ -10,6 +12,7 @@ use Z;
 
 /**
  * 角色业务
+ *
  * @author seekwe <seekwe@gmail.com>
  */
 class GroupBusiness extends \Zls_Business
@@ -17,7 +20,7 @@ class GroupBusiness extends \Zls_Business
     /**
      * 角色列表
      *
-     * @param array $where 查询条件
+     * @param array  $where  查询条件
      *
      * @return array
      */
@@ -33,7 +36,7 @@ class GroupBusiness extends \Zls_Business
     /**
      * 查找角色
      *
-     * @param int $id
+     * @param int  $id
      *
      * @return array
      */
@@ -45,9 +48,9 @@ class GroupBusiness extends \Zls_Business
     /**
      * 创建/更新角色
      *
-     * @param int    $id     角色ID
-     * @param string $name   角色名称
-     * @param string $remark 角色备注
+     * @param int     $id      角色ID
+     * @param string  $name    角色名称
+     * @param string  $remark  角色备注
      *
      * @return array|string
      */
@@ -79,7 +82,7 @@ class GroupBusiness extends \Zls_Business
     /**
      * 整合角色相关数据
      *
-     * @param array $info
+     * @param array  $info
      *
      * @return array
      */
@@ -92,23 +95,33 @@ class GroupBusiness extends \Zls_Business
         $gid          = $info['id'];
         $RulesRelaDao = new RulesRelaDao();
         $lists        = $RulesRelaDao->findAll(
-            ['group_id' => $gid], ['id' => 'desc'], null, 'status,rule_id'
+            ['group_id' => $gid],
+            ['id' => 'desc'],
+            null,
+            'status,rule_id'
         );
         $rows         = [];
         foreach ($lists as $row) {
             $rows[$row['status']][] = $row;
         }
         $info['rule_ids']     = z::arrayValues(
-            z::arrayGet($rows, '1', []), 'rule_id'
+            z::arrayGet($rows, '1', []),
+            'rule_id'
         );
         $info['ban_rule_ids'] = z::arrayValues(
-            z::arrayGet($rows, '2', []), 'rule_id'
+            z::arrayGet($rows, '2', []),
+            'rule_id'
         );
         // $info['rules_count'] = count($info['rule_ids'])+count($info['ban_rule_ids']);
         $info['user_count'] = z::arrayGet(
             (new UserDao)->find(
-                ['group_id' => $info['id']], false, [], 'count(*) as count'
-            ), 'count', 0
+                ['group_id' => $info['id']],
+                false,
+                [],
+                'count(*) as count'
+            ),
+            'count',
+            0
         );
 
         return $info;
@@ -117,35 +130,74 @@ class GroupBusiness extends \Zls_Business
     /**
      * 获取菜单
      *
-     * @param int $userid
+     * @param int  $userid
      *
      * @return array
      */
-    public function getMenu($userid = 0): array
+    public function getMenu($groupid = 0, $isSuper = false): array
     {
-        $menu = [
-            [
-                'id'    => 2,
-                'title' => '日志查看',
-                'index' => 'system/logs',
-                'icon'  => 'icon-alert-circle',
-            ],
-            [
-                'id'         => 1,
-                'title'      => '系统设置',
-                'index'      => 'system',
-                'breadcrumb' => false,
-                'icon'       => 'icon-options-',
-                'child'      => [
-                    ['id' => 10, 'title' => '程序设置', 'index' => 'system/config', 'icon' => 'icon-settings',],
-                    ['id' => 11, 'title' => '用户设置', 'index' => 'user/lists', 'icon' => 'icon-person',],
-                    ['id' => 12, 'title' => '角色设置', 'index' => 'user/group', 'icon' => 'icon-people'],
-                    ['id' => 13, 'title' => '菜单设置', 'index' => 'user/menu', 'icon' => 'icon-pricetags',],
-                ],
-            ],
-        ];
+        $dao    = new MenuDao();
+        $fields = $dao->getReversalColumns(null, true);
 
-        return $menu;
+        $dao->getDb()
+            ->select($fields)
+            ->from($dao->getTable())
+            ->orderBy('pid', 'asc')
+            ->orderBy('sort', 'asc');
+        $result = $dao->getDb()->execute()->rows();
+        $result = array_combine(array_column($result, 'id'), $result);
+
+        if (!$isSuper) {
+            $groupMenuDao = new GroupMenuDao();
+            $fields       = $groupMenuDao->getReversalColumns(["id", "create_time", "update_time"], true);
+
+            $where["groupid"] = $groupid;
+            $groupMenuDao->getDb()
+                ->select($fields)
+                ->from($groupMenuDao->getTable())
+                ->where($where);
+            $re = $dao->getDb()->execute()->row();
+        }
+
+        $menuArr = [];
+        if (isset($re)) {
+            $menuArr = explode(",", z::arrayGet($re, "menu", []));
+        }
+
+        $pMenu = [];
+        $data  = [];
+        //result是排序查询出来的，所以pid=0的必然在前面
+        foreach ($result as $key => $value) {
+            if (!$isSuper && !in_array($value["id"], $menuArr)) {
+                continue;
+            }
+
+            if ($value['pid'] == 0) {
+                $pMenu[] = $value["id"];
+                $data[]  = $value;
+            } else {
+                //菜单1下有菜单2和菜单3，目前菜单1的主键是可能不保存到数据库的
+                //循环出来的菜单是必然要显示的，所以需要找到他的上级菜单
+
+                //找到上级菜单加入到data中
+                if (!in_array($value["pid"], $pMenu)) {
+                    $pMenu[]                           = $value["pid"];
+                    $data[]                            = $result[$value["pid"]];
+                    $data[count($data) - 1]['child'][] = $value;
+                } else {
+                    foreach ($data as $k => $v) {
+                        if ($v['id'] == $value['pid']) {
+                            $data[$k]['child'][] = $value;
+                        }
+                    }
+                }
+            }
+        }
+        foreach ($data as $key => $value) {
+            $sort[$key] = $value["sort"];
+        }
+        array_multisort($sort, SORT_ASC, $data);
+        return $data;
     }
 
     /**
@@ -172,8 +224,8 @@ class GroupBusiness extends \Zls_Business
     /**
      * 获取角色权限信息
      *
-     * @param      $groupid
-     * @param null $type
+     * @param       $groupid
+     * @param null  $type
      *
      * @return array
      */
@@ -193,5 +245,99 @@ class GroupBusiness extends \Zls_Business
         });
 
         return $rules;
+    }
+
+    public function getMenus($user)
+    {
+        $MenuDao = new MenuDao();
+        $menus   = $MenuDao->find([], true, ['sort' => 'asc'], 'id, title, index, icon, breadcrumb, real, show, pid, sort');
+
+        $vueUrl = function ($show, $url) {
+            if (!$show) {
+                return '';
+            }
+            if ($url === 'main') {
+                return 'pages/main/' . $url . '.vue';
+            }
+
+            if ($url[0] === '/') {
+                return 'pages' . $url . '.vue';
+            }
+
+            return 'pages/' . $url . '.vue';
+        };
+
+        $vuePath = function ($path) {
+            if ($path[0] === '/') {
+                if (substr($path, 0, strlen('/main')) !== '/main') {
+                    return '/main' . $path;
+                }
+            } else {
+                if ($path === 'main') {
+                    return '/' . $path . '/main';
+                } elseif (substr($path, 0, strlen('/main/')) !== '/main/') {
+                    return '/main/' . $path;
+                }
+            }
+
+            return $path;
+        };
+
+        $conv = function ($menu, $groupMenusIds) use ($vuePath, $vueUrl, $user) {
+            $show = $user['isSuper'] === 1 ? true : in_array($menu['id'], array_merge([1], $groupMenusIds));
+            $has  = $user['isSuper'] === 1 ? true : in_array($menu['id'], array_merge([1, 2, 7], $groupMenusIds));
+            return [
+                'name'     => z::arrayGet($menu, 'title', ''),
+                'path'     => $vuePath(z::arrayGet($menu, 'index', '')),
+                'url'      => $vueUrl(true, z::arrayGet($menu, 'index', '')),
+                'icon'     => z::arrayGet($menu, 'icon', ''),
+                'meta'     => [
+                    'breadcrumb' => z::arrayGet($menu, 'breadcrumb', 0) === 1,
+                    'real'       => z::arrayGet($menu, 'real', 0) === 1,
+                    'show'       => z::arrayGet($menu, 'show', 0) === 1 && $show,
+                    'has'        => $has,
+                    'collapse'   => false,
+                ],
+                'children' => [],
+            ];
+        };
+
+        $getChild = function ($convFun, $menu, $groupMenusIds) use ($menus) {
+            $re = [];
+            foreach ($menus as $k => $v) {
+                if ($v['pid'] === $menu['id']) {
+                    $re[] = $convFun($v, $groupMenusIds);
+                }
+            }
+
+            return $re;
+        };
+
+
+        $groupMenusIds = [];// 拥有的菜单栏权限
+        $Dao = new GroupMenuDao();
+        $res = $Dao->find(['groupid' => explode(',', $user['group_id'])], true, [], 'groupid, menu');
+        foreach ($res as $v) {
+            $groupMenusIds = array_merge($groupMenusIds, explode(',', $v['menu']));
+        }
+        $groupMenusIds = array_unique($groupMenusIds);
+        asort($groupMenusIds);
+
+        $f = [];
+        foreach ($menus as $kk => $vv) {
+            if ($vv['pid'] === 0) {
+                $menuConv                     = $conv($vv, $groupMenusIds);
+                $menuConv['children']         = $getChild($conv, $vv, $groupMenusIds);
+                $menuConv['meta']['collapse'] = in_array(true, array_column(array_column($menuConv['children'], 'meta'), 'show'));
+                $menuConv['url']              =
+                    in_array(true, array_column(array_column($menuConv['children'], 'meta'), 'has'))
+                    && $menuConv['name'] !== '后台中心'
+                        ? ''
+                        : $menuConv['url'];
+                $f[]                          = $menuConv;
+            }
+        }
+
+        return $f;
     }
 }

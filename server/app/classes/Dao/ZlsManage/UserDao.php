@@ -1,5 +1,6 @@
 <?php
-declare (strict_types=1);
+
+declare(strict_types=1);
 
 namespace Dao\ZlsManage;
 
@@ -108,18 +109,19 @@ class UserDao extends \Zls_Dao
     public function getColumns(): array
     {
         return [
-            'id',//id
-            'username',//用户名
-            'password',//用户密码
-            'key',//密码盐
-            'nickname',//用户昵称
-            'email',//Email
-            'remark',//用户简介
-            'avatar',//头像
-            'status',//状态:-1软删除,0待激活,1正常,2禁止
-            'group_id',//角色Id
-            'create_time',//创建时间
-            'update_time',//更新时间
+            'id', //id
+            'username', //用户名
+            'password', //用户密码
+            'key', //密码盐
+            'nickname', //用户昵称
+            'email', //Email
+            'remark', //用户简介
+            'avatar', //头像
+            'status', //状态:-1软删除,0待激活,1正常,2禁止
+            'group_id', //角色Id
+            'is_super', //超级管理
+            'create_time', //创建时间
+            'update_time', //更新时间
         ];
     }
 

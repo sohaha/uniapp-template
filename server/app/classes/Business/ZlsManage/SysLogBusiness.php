@@ -1,5 +1,6 @@
 <?php
-declare (strict_types=1);
+
+declare(strict_types=1);
 
 namespace Business\ZlsManage;
 
@@ -101,7 +102,7 @@ class SysLogBusiness extends \Zls_Business
         } elseif ($start === true) {
             $start = 0;
         } else {
-            $start = (int)$start;
+            $start = (int) $start;
         }
         if ($sum === true) {
             $sum = $total;

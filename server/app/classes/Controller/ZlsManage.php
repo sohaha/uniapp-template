@@ -7,7 +7,6 @@ namespace Controller;
 use Business\ZlsManage\AuthBusiness;
 use Business\ZlsManage\PermissionsBusiness;
 use Business\ZlsManage\UserBusiness;
-use Dao\ZlsManage\AccessLogDao;
 use Z;
 use Zls\Action\ApiDoc;
 use Zls_Controller;
@@ -27,6 +26,7 @@ class ZlsManage extends Zls_Controller
         Z::redirect('/zls-manage/index.html');
     }
 
+    protected $TOKENID;
     protected $USER;
     /** @var UserBusiness $UserBusiness */
     protected $UserBusiness;
@@ -57,12 +57,15 @@ class ZlsManage extends Zls_Controller
         }
         // 是否只需匹配权限配置内其中一个即可
         $singlePermission = $comment('single-permission');
-        $token            = $this->getToken();
-        $this->USER       = $this->UserBusiness->tokenToInfo($token);
+        $this->TOKENID    = $this->getTokenId();
+        $this->USER       = $this->UserBusiness->tokenToInfo($this->TOKENID);
         if (!$this->USER) {
             return [401, '请先登录'];
         }
-        $this->USER['isSuper'] = $this->UserBusiness->isSuperAdmin((int) $this->USER['id']);
+        if (!$this->UserBusiness->isExpire()) {
+            return [401, '登录过期，请重新登录'];
+        }
+        $this->USER['token']   = $this->getToken();
         $noVerification        = [];
         $permission            = array_reduce($permission ?: [], 'array_merge', []);
         $classPermission       = array_reduce($classPermission ?: [], 'array_merge', []);
@@ -92,6 +95,22 @@ class ZlsManage extends Zls_Controller
     final protected function getToken(): string
     {
         return z::server('HTTP_TOKEN') ?: z::getPost('token', '');
+    }
+
+    /**
+     * 获取token
+     * @return string
+     */
+    final protected function getTokenId(): int
+    {
+        $user   = Z::decrypt($this->getToken());
+        if (!$user) {
+            return 0;
+        }
+        $dsArr  = explode('_', $user);
+        $tokenid= (int)z::arrayGet($dsArr, 3, 0);
+
+        return $tokenid;
     }
 
     /**
@@ -136,6 +155,10 @@ class ZlsManage extends Zls_Controller
      */
     final public function hasPermission(string $permissions, $userid = null): bool
     {
+        if ($isSuper = $this->getInfo('isSuper')) {
+            return true;
+        }
+
         if ($userid === null) {
             $groupid = $this->getInfo('group_id');
         } else {
@@ -168,23 +191,6 @@ class ZlsManage extends Zls_Controller
      */
     public function after($contents, $methodName, $controllerShort, $args, $methodFull, $class): string
     {
-        if ($this->USER) {
-            $jsonOpt = JSON_UNESCAPED_UNICODE + JSON_UNESCAPED_SLASHES;
-            $dao     = new AccessLogDao();
-            $data    = [
-                'userid'      => $this->getInfo('id'),
-                'route'       => Z::host(false, true),
-                'param'       => json_encode(Z::get(), $jsonOpt),
-                'input'       => json_encode(z::post() ?: (Z::postRaw() ?: ''), $jsonOpt),
-                'content'     => json_encode($contents, $jsonOpt),
-                'create_time' => date('Y-m-d H:i:s'),
-            ];
-            $dao->insert($data);
-        }
-        if ($contents === null) {
-            return '';
-        }
-
         return is_array($contents) ? Z::json($contents) : Z::json(211, $contents);
     }
 

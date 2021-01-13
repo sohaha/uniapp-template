@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "7b42c4088d15dff8d3bbc238950974d3",
+    "content-hash": "8dc852a67ddf66a66414ea74c2fdef0a",
     "packages": [
         {
             "name": "zls/action",
-            "version": "v1.2.8",
+            "version": "v1.2.17",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sohaha/ZlsPHP-Action.git",
-                "reference": "c2da577e4feea487a4361c917d9fb07cd743912b"
+                "reference": "951c635659beff922073b215c5d0a611062e50ad"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sohaha/ZlsPHP-Action/zipball/c2da577e4feea487a4361c917d9fb07cd743912b",
-                "reference": "c2da577e4feea487a4361c917d9fb07cd743912b",
+                "url": "https://api.github.com/repos/sohaha/ZlsPHP-Action/zipball/951c635659beff922073b215c5d0a611062e50ad",
+                "reference": "951c635659beff922073b215c5d0a611062e50ad",
                 "shasum": "",
                 "mirrors": [
                     {
@@ -25,6 +25,10 @@
                         "preferred": true
                     }
                 ]
+            },
+            "require": {
+                "ext-iconv": "*",
+                "ext-zip": "*"
             },
             "type": "library",
             "autoload": {
@@ -42,7 +46,7 @@
                     "email": "seekwe@gmail.com"
                 }
             ],
-            "time": "2019-12-23T06:10:19+00:00"
+            "time": "2020-12-17T08:29:08+00:00"
         },
         {
             "name": "zls/cache",
@@ -84,16 +88,16 @@
         },
         {
             "name": "zls/command",
-            "version": "v1.2.5",
+            "version": "v1.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sohaha/ZlsPHP-Command.git",
-                "reference": "297f3f5bd657496a9ec91b7b84e01d3f212a67fd"
+                "reference": "5bac059853f46119dfb4d8b218cb2cf315a4e2d6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sohaha/ZlsPHP-Command/zipball/297f3f5bd657496a9ec91b7b84e01d3f212a67fd",
-                "reference": "297f3f5bd657496a9ec91b7b84e01d3f212a67fd",
+                "url": "https://api.github.com/repos/sohaha/ZlsPHP-Command/zipball/5bac059853f46119dfb4d8b218cb2cf315a4e2d6",
+                "reference": "5bac059853f46119dfb4d8b218cb2cf315a4e2d6",
                 "shasum": "",
                 "mirrors": [
                     {
@@ -121,7 +125,7 @@
                     "email": "seekwe@gmail.com"
                 }
             ],
-            "time": "2019-12-20T11:42:26+00:00"
+            "time": "2020-12-21T14:00:57+00:00"
         },
         {
             "name": "zls/dao",
@@ -166,16 +170,16 @@
         },
         {
             "name": "zls/framework",
-            "version": "v2.5.2",
+            "version": "v2.5.16",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sohaha/ZlsPHP-Framework.git",
-                "reference": "857b488e27c37aacfdc0a096afdd028145bc28e6"
+                "reference": "95c5c93615cf5814276d32f152297097110d956f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sohaha/ZlsPHP-Framework/zipball/857b488e27c37aacfdc0a096afdd028145bc28e6",
-                "reference": "857b488e27c37aacfdc0a096afdd028145bc28e6",
+                "url": "https://api.github.com/repos/sohaha/ZlsPHP-Framework/zipball/95c5c93615cf5814276d32f152297097110d956f",
+                "reference": "95c5c93615cf5814276d32f152297097110d956f",
                 "shasum": "",
                 "mirrors": [
                     {
@@ -204,7 +208,50 @@
                     "email": "seekwe@gmail.com"
                 }
             ],
-            "time": "2020-07-26T11:15:36+00:00"
+            "time": "2021-01-08T09:27:43+00:00"
+        },
+        {
+            "name": "zls/install",
+            "version": "v0.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/sohaha/ZlsPHP-Install.git",
+                "reference": "e803393790f4b716a854d96a3803003de0360307"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/sohaha/ZlsPHP-Install/zipball/e803393790f4b716a854d96a3803003de0360307",
+                "reference": "e803393790f4b716a854d96a3803003de0360307",
+                "shasum": "",
+                "mirrors": [
+                    {
+                        "url": "https://mirrors.aliyun.com/composer/dists/%package%/%reference%.%type%",
+                        "preferred": true
+                    }
+                ]
+            },
+            "require": {
+                "ext-iconv": "*",
+                "ext-zip": "*",
+                "zls/action": "*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Zls\\Install\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "影浅",
+                    "email": "seekwe@gmail.com"
+                }
+            ],
+            "time": "2020-12-17T05:38:23+00:00"
         },
         {
             "name": "zls/logger",
@@ -246,16 +293,16 @@
         },
         {
             "name": "zls/manage",
-            "version": "v0.0.53",
+            "version": "v0.2.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sohaha/ZlsPHP-Manage.git",
-                "reference": "61ea340f2a79c0541fcb5265d1dbea5d1c45e8f3"
+                "reference": "624352a36330b17813a857814ca833ac98e0b0c9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sohaha/ZlsPHP-Manage/zipball/61ea340f2a79c0541fcb5265d1dbea5d1c45e8f3",
-                "reference": "61ea340f2a79c0541fcb5265d1dbea5d1c45e8f3",
+                "url": "https://api.github.com/repos/sohaha/ZlsPHP-Manage/zipball/624352a36330b17813a857814ca833ac98e0b0c9",
+                "reference": "624352a36330b17813a857814ca833ac98e0b0c9",
                 "shasum": "",
                 "mirrors": [
                     {
@@ -265,6 +312,7 @@
                 ]
             },
             "require": {
+                "zls/install": "*",
                 "zls/migration": "*"
             },
             "type": "library",
@@ -284,7 +332,7 @@
                 }
             ],
             "description": "ZlsPHP通用后台",
-            "time": "2019-12-12T10:11:37+00:00"
+            "time": "2020-12-17T10:12:04+00:00"
         },
         {
             "name": "zls/migration",
@@ -418,5 +466,6 @@
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": [],
-    "platform-dev": []
+    "platform-dev": [],
+    "plugin-api-version": "1.1.0"
 }

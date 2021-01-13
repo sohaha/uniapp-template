@@ -1,5 +1,6 @@
 <?php
-declare (strict_types=1);
+
+declare(strict_types=1);
 
 namespace Business\ZlsManage;
 
@@ -26,5 +27,4 @@ class PermissionsBusiness extends \Zls_Business
 
         return in_array($permissions, $marks, true);
     }
-
 }

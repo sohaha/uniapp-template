@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Dao\ZlsManage;
@@ -16,19 +17,19 @@ class LogsDao extends \Zls_Dao
     public function getColumns(): array
     {
         return [
-            'id'//id
+            'id' //id
             ,
-            'userid'//对应用户Id
+            'userid' //对应用户Id
             ,
-            'operate_id'//操作人Id，游客为0
+            'operate_id' //操作人Id，游客为0
             ,
-            'content'//信息
+            'content' //信息
             ,
-            'create_time'//创建时间
+            'create_time' //创建时间
             ,
-            'update_time'//更新时间
+            'update_time' //更新时间
             ,
-            'type'//状态:1正常，2警告，3错误
+            'type' //状态:1正常，2警告，3错误
         ];
     }
 
@@ -55,7 +56,7 @@ class LogsDao extends \Zls_Dao
             'title'       => $title,
         ];
 
-        return (int)$this->insert($data);
+        return (int) $this->insert($data);
     }
 
     public function createOperationLog($userid, $title, $content, $operateid = 0, $type = self::TYPE_NORMAL, $status = self::STATUS_NOT): int

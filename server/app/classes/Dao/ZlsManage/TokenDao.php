@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Dao\ZlsManage;
@@ -13,21 +14,21 @@ class TokenDao extends \Zls_Dao
     public function getColumns(): array
     {
         return [
-            'id'//id
+            'id' //id
             ,
-            'userid'//管理员Id
+            'userid' //管理员Id
             ,
-            'token'//token
+            'token' //token
             ,
-            'ip'//登录IP
+            'ip' //登录IP
             ,
-            'ua'//User Agent
+            'ua' //User Agent
             ,
-            'create_time'//创建时间
+            'create_time' //创建时间
             ,
-            'update_time'//更新时间
+            'update_time' //更新时间
             ,
-            'status'//状态:1正常,2禁止
+            'status' //状态:1正常,2禁止
         ];
     }
 
@@ -59,7 +60,6 @@ class TokenDao extends \Zls_Dao
             'status'      => self::STATUS_OPEN,
         ];
 
-        return (int)$this->insert($data);
+        return (int) $this->insert($data);
     }
-
 }
