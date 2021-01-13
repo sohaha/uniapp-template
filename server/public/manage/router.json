@@ -1,0 +1,134 @@
+[
+  {
+    "name": "后台中心",
+    "path": "/main/main",
+    "url": "pages/main/main.vue",
+    "icon": "icon-home",
+    "meta": {
+      "breadcrumb": false,
+      "real": true,
+      "show": true,
+      "has": true
+    },
+    "children": [
+      {
+        "name": "站内消息",
+        "path": "/main/user/logs",
+        "url": "pages/user/logs.vue",
+        "icon": "icon-settings-",
+        "meta": {
+          "show": false,
+          "has": true
+        }
+      }
+    ]
+  },
+  {
+    "name": "会员管理",
+    "path": "",
+    "url": "",
+    "icon": "icon-person-add",
+    "meta": {
+      "breadcrumb": true,
+      "show": true,
+      "has": true,
+      "collapse": true
+    },
+    "children": [
+      {
+        "name": "微信用户",
+        "path": "member/wechat",
+        "url": "pages/member/wechat.vue",
+        "icon": "icon-award",
+        "meta": {
+          "show": true,
+          "has": true
+        }
+      }
+    ]
+  },
+  {
+    "name": "日志查看",
+    "path": "/main/system/logs",
+    "url": "pages/system/logs.vue",
+    "icon": "icon-alert-circle",
+    "meta": {
+      "show": true,
+      "has": true
+    }
+  },
+  {
+    "name": "系统设置",
+    "path": "",
+    "url": "",
+    "icon": "icon-options-",
+    "meta": {
+      "breadcrumb": true,
+      "show": true,
+      "has": true,
+      "collapse": true
+    },
+    "children": [
+      {
+        "name": "程序设置",
+        "path": "system/config",
+        "url": "pages/system/config.vue",
+        "icon": "icon-settings",
+        "meta": {
+          "show": true,
+          "has": true
+        }
+      },
+      {
+        "name": "用户设置",
+        "path": "user/lists",
+        "url": "pages/user/lists.vue",
+        "icon": "icon-person",
+        "meta": {
+          "show": true,
+          "has": true
+        }
+      },
+      {
+        "name": "角色设置",
+        "path": "user/group",
+        "url": "pages/user/group.vue",
+        "icon": "icon-people",
+        "meta": {
+          "show": true,
+          "has": true
+        }
+      },
+      {
+        "name": "菜单设置",
+        "path": "user/menu",
+        "url": "pages/user/menu.vue",
+        "icon": "icon-pricetags",
+        "meta": {
+          "show": true,
+          "has": true
+        }
+      },
+      {
+        "name": "个人设置",
+        "path": "user/my",
+        "url": "pages/user/my.vue",
+        "icon": "icon-person-done",
+        "meta": {
+          "show": true,
+          "has": true
+        }
+      },
+      {
+        "name": "权限设置",
+        "path": "user/rules",
+        "url": "pages/user/rules.vue",
+        "icon": "icon-pantone",
+        "meta": {
+          "show": true,
+          "has": true
+        }
+      }
+    ]
+  }
+]
