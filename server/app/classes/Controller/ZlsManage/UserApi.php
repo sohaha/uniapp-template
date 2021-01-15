@@ -58,7 +58,7 @@ class UserApi extends ZlsManage
     {
         $assist = new AssistBusiness();
         $uid    = $this->getInfo('id');
-        $ids    = z::postText('ids');
+        $ids    = z::postJson('ids');
 
         return [200, '日志标记已读', $assist->updateMessageStatus($ids, $uid)];
     }
@@ -115,8 +115,8 @@ class UserApi extends ZlsManage
         if ($this->UserBusiness->isBusyLogin()) {
             return [212, '登录过于频繁，请稍后再试'];
         }
-        $user   = z::postGet('user');
-        $pass   = z::postGet('pass');
+        $user   = z::postJson('user');
+        $pass   = z::postJson('pass');
         $user   = $this->UserBusiness->nameToInfo($user);
         $status = $this->UserBusiness->checkPass($user, $pass);
         if (is_string($status)) {
@@ -138,8 +138,8 @@ class UserApi extends ZlsManage
     public function PUTzUpdate()
     {
         $uid     = (int)$this->getInfo('id');
-        $userid  = (int)(z::postText('id') ?: $uid);
-        $post    = z::postText();
+        $userid  = (int)(z::postJson('id') ?: $uid);
+        $post    = z::postJson();
         $isSuper = $this->getInfo('isSuper');
         $ok = false;
         // 被修改的用户是否超级管理员
@@ -184,10 +184,10 @@ class UserApi extends ZlsManage
      */
     public function PUTzEditPassword()
     {
-        $oldPassword = z::postText('oldPass');
-        $newPassword = z::postText('pass');
+        $oldPassword = z::postJson('oldPass');
+        $newPassword = z::postJson('pass');
         $userid      = (int)$this->getInfo('id');
-        $upUid       = (int)(z::postText('userid') ?: $userid);
+        $upUid       = (int)(z::postJson('userid') ?: $userid);
         $ok = false;
         if ($userid === $upUid) {
             $rs = $this->UserBusiness->editPassword($upUid, $oldPassword, $newPassword, $userid);

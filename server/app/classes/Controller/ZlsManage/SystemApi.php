@@ -38,8 +38,8 @@ class SystemApi extends UserApi
      */
     public function DELETEzSystemLogs(): array
     {
-        $name = z::postText('name');
-        $type = z::postText('type');
+        $name = z::postJson('name');
+        $type = z::postJson('type');
         $data = $name && $type ? (new SysLogBusiness)->delete($type, $name) : false;
 
         return [200, '删除系统日志', $data];
@@ -64,7 +64,7 @@ class SystemApi extends UserApi
     {
         $userID  = (int)z::arrayGet($this->USER, 'id', 0);
         $tokenID = $this->getTokenId();
-        return [200, '更新系统配置', (new AssistBusiness)->updateSystemConfig(z::postText(), $userID, $tokenID)];
+        return [200, '更新系统配置', (new AssistBusiness)->updateSystemConfig(z::postJson(), $userID, $tokenID)];
     }
 
     /**

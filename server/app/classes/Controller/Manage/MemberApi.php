@@ -33,11 +33,11 @@ class MemberApi extends ZlsManage
      */
     public function POSTzBanWxUser()
     {
-        if (!$id = (int)Z::post('id')) {
+        if (!$id = (int)Z::postJson('id')) {
             return '用户ID不能为空';
         }
         $dao    = new WxMemberDao();
-        $status = (int)Z::post('status');
+        $status = (int)Z::postJson('status');
         if (!Z::checkValue($status, ['enum[-1,0,1,2]'])) {
             return '用户状态不在合法范围';
         }

@@ -418,19 +418,19 @@ export function requestInit () {
   };
 
   const put = request.put;
-  request.put = (url, data, conf = {}, keep) => {
+  request.put = (url, data, conf = {}, keep = true) => {
     data = keep ? data : urlEncode(data);
     return put(url, data, conf);
   };
 
   const post = request.post;
-  request.post = (url, data, conf = {}, keep) => {
+  request.post = (url, data, conf = {}, keep = true) => {
     data = keep ? data : urlEncode(data);
     return post(url, data, conf);
   };
 
   const del = request.delete;
-  request.delete = (url, data, conf = {}, keep) => {
+  request.delete = (url, data, conf = {}, keep = true) => {
     conf['data'] = keep ? data : urlEncode(data);
     return del(url, conf);
   };

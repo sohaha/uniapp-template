@@ -129,16 +129,16 @@
         },
         {
             "name": "zls/dao",
-            "version": "v1.1.11",
+            "version": "v1.1.12",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sohaha/ZlsPHP-Dao.git",
-                "reference": "1456da6dae092ca5415615d906d43803b97af263"
+                "reference": "5b3e1861d903112c487b689e5921f3f12f466cf7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sohaha/ZlsPHP-Dao/zipball/1456da6dae092ca5415615d906d43803b97af263",
-                "reference": "1456da6dae092ca5415615d906d43803b97af263",
+                "url": "https://api.github.com/repos/sohaha/ZlsPHP-Dao/zipball/5b3e1861d903112c487b689e5921f3f12f466cf7",
+                "reference": "5b3e1861d903112c487b689e5921f3f12f466cf7",
                 "shasum": "",
                 "mirrors": [
                     {
@@ -166,7 +166,7 @@
                     "email": "seekwe@gmail.com"
                 }
             ],
-            "time": "2020-05-07T09:21:23+00:00"
+            "time": "2020-10-22T08:36:59+00:00"
         },
         {
             "name": "zls/framework",
@@ -293,16 +293,16 @@
         },
         {
             "name": "zls/manage",
-            "version": "v0.2.4",
+            "version": "v0.2.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sohaha/ZlsPHP-Manage.git",
-                "reference": "624352a36330b17813a857814ca833ac98e0b0c9"
+                "reference": "3fe3afb5a2dd826bc072b358e505eb27d2d3122d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sohaha/ZlsPHP-Manage/zipball/624352a36330b17813a857814ca833ac98e0b0c9",
-                "reference": "624352a36330b17813a857814ca833ac98e0b0c9",
+                "url": "https://api.github.com/repos/sohaha/ZlsPHP-Manage/zipball/3fe3afb5a2dd826bc072b358e505eb27d2d3122d",
+                "reference": "3fe3afb5a2dd826bc072b358e505eb27d2d3122d",
                 "shasum": "",
                 "mirrors": [
                     {
@@ -332,7 +332,7 @@
                 }
             ],
             "description": "ZlsPHP通用后台",
-            "time": "2020-12-17T10:12:04+00:00"
+            "time": "2021-01-15T04:42:12+00:00"
         },
         {
             "name": "zls/migration",

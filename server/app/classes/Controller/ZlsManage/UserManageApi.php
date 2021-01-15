@@ -47,7 +47,7 @@ class UserManageApi extends ZlsManage
      */
     public function POSTzUser()
     {
-        $post = z::postText();
+        $post = z::postJson();
         $rs   = $this->UserBusiness->create($post);
 
         return is_string($rs) ? $rs : [200, '处理成功', ['id' => $rs]];
@@ -63,7 +63,7 @@ class UserManageApi extends ZlsManage
      */
     public function DELETEzUser()
     {
-        $id = (int) z::postText('id');
+        $id = (int) z::postJson('id');
         switch (true) {
             case ($id === z::arrayGet($this->USER, 'id')):
                 $result = '不可以删除自己';
@@ -120,8 +120,8 @@ class UserManageApi extends ZlsManage
      */
     public function POSTzGroups()
     {
-        $name   = z::post('name');
-        $remark = z::post('remark', '');
+        $name   = z::postJson('name');
+        $remark = z::postJson('remark', '');
         $res    = (new GroupBusiness)->save(null, $name, $remark);
 
         return is_string($res) ? $res : [200, '创建新角色', $res];
@@ -150,9 +150,9 @@ class UserManageApi extends ZlsManage
      */
     public function PUTzGroups()
     {
-        $name   = z::postText('name');
-        $remark = z::postText('remark', '');
-        $id     = z::postText('id', 0);
+        $name   = z::postJson('name');
+        $remark = z::postJson('remark', '');
+        $id     = z::postJson('id', 0);
         $res    = (new GroupBusiness)->save($id, $name, $remark);
 
         return is_string($res) ? $res : [200, '更新角色', $res];
@@ -185,10 +185,10 @@ class UserManageApi extends ZlsManage
      */
     public function POSTzRules()
     {
-        $title  = z::postText('title', '');
-        $mark   = z::postText('mark', '');
-        $type   = z::postText('type', '');
-        $remark = z::postText('remark', '');
+        $title  = z::postJson('title', '');
+        $mark   = z::postJson('mark', '');
+        $type   = z::postJson('type', '');
+        $remark = z::postJson('remark', '');
         $res    = (new RulesBusiness)->addRules($title, $mark, $type, $remark);
 
         return is_string($res) ? $res : [200, '权限规则列表', $res];
@@ -202,10 +202,10 @@ class UserManageApi extends ZlsManage
      */
     public function PUTzRules()
     {
-        $title  = z::postText('title', '');
-        $mark   = z::postText('mark', '');
-        $id     = z::postText('id', '');
-        $remark = z::postText('remark', '');
+        $title  = z::postJson('title', '');
+        $mark   = z::postJson('mark', '');
+        $id     = z::postJson('id', '');
+        $remark = z::postJson('remark', '');
         $res    = (new RulesBusiness)->editRules($id, $title, $mark, $remark);
 
         return is_string($res) ? $res : [200, '权限规则列表', $res];
@@ -219,7 +219,7 @@ class UserManageApi extends ZlsManage
      */
     public function DELETEzRules()
     {
-        $id  = z::postText('id', '');
+        $id  = z::postJson('id', '');
         $res = (new RulesBusiness)->deteleRules($id);
 
         return is_string($res) ? $res : [200, '删除权限规则', $res];
@@ -233,10 +233,10 @@ class UserManageApi extends ZlsManage
      */
     public function PUTzUpdateUserRuleStatus()
     {
-        $id     = z::postText('id');
-        $gid    = z::postText('gid');
-        $status = z::postText('status');
-        $sort   = z::postText('sort');
+        $id     = z::postJson('id');
+        $gid    = z::postJson('gid');
+        $status = z::postJson('status');
+        $sort   = z::postJson('sort');
         $res    = (new RulesBusiness)->updateUserRuleStatus((int) $gid, (int) $id, (int) $status, (int) $sort);
 
         return is_string($res) ? $res : [200, '权限规则列表', $res];

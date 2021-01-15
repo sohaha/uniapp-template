@@ -23,7 +23,7 @@ class MenuApi extends ZlsManage
      */
     public function POSTzUserMenu(): array
     {
-        $post = z::post();
+        $post = z::postJson();
         $groupid = Z::arrayGet($post, 'groupid')?:0;
 
         $retVal = (new MenuBusiness())->lists($groupid);
@@ -44,7 +44,7 @@ class MenuApi extends ZlsManage
      */
     public function POSTzCreate()
     {
-        $post = z::post();
+        $post = z::postJson();
         $business = new MenuBusiness();
         $rs   = $business->create($post);
 
@@ -59,7 +59,7 @@ class MenuApi extends ZlsManage
      */
     public function POSTzDelete()
     {
-        $id = z::post('id', 0);
+        $id = z::postJson('id', 0);
         if ($id == 0) {
             return '菜单id不允许为空';
         }
@@ -83,7 +83,7 @@ class MenuApi extends ZlsManage
     public function POSTzUpdate()
     {
         $business = new MenuBusiness();
-        $retVal = $business->update(z::post());
+        $retVal = $business->update(z::postJson());
 
         return is_string($retVal) ?  $retVal : [200, '请求成功', $retVal];
     }
@@ -97,7 +97,7 @@ class MenuApi extends ZlsManage
     public function POSTzSort()
     {
         $business = new MenuBusiness();
-        $post = z::post('menu', '');
+        $post = z::postJson('menu', '');
         $json = @json_decode($post,true);
 
         $retVal = $business->sort($json);
@@ -115,7 +115,7 @@ class MenuApi extends ZlsManage
     public function POSTzUpdateGroupMenu()
     {
         $business = new MenuBusiness();
-        $retVal = $business->updateGroupMenu(z::post());
+        $retVal = $business->updateGroupMenu(z::postJson());
 
         return is_string($retVal) ?  $retVal : [200, '请求成功', $retVal];
     }
