@@ -1,15 +1,3 @@
-/*
- * @Author: seekwe
- * @Date: 2020-07-29 16:54:03
- * @Last Modified by:: seekwe
- * @Last Modified time: 2020-07-30 16:53:34
- */ 
-/**
- * @Author: seekwe
- * @Date:   2019-11-11 15:10:32
- * @Last Modified by:   seekwe
- * @Last Modified time: 2019-12-17 16:41:04
- */
 import { ajax } from './index';
 import { getToken } from './index';
 import { request } from './index';

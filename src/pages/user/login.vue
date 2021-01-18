@@ -1,44 +1,70 @@
 <template>
-	<view class="content">
-		<input v-model="username" />
-		<input v-model="password" />
-		<button @click="login">登录</button>
-	</view>
+  <view class="content">
+    <button @click="upload">上传文件</button>
+    <image v-if="avatar" mode="widthFix" class="demo-img" :src="avatar"/>
+  </view>
 </template>
 
 <script>
-	import {login} from "@/apis/modules/user.js";
-	import {
-		mapState,
-		mapGetters
-	} from "vuex";
-	export default {
-		data() {
-			return {
-				username: "seekwe",
-				password: "123456"
-			};
-		},
-		computed: {
-			...mapGetters(["userInfo"])
-		},
-		mounted() {},
-		methods: {
-			login() {
-				this.$log("登录")
-				login()
-			}
-		}
-	};
+import {
+  mapState,
+  mapGetters
+} from "vuex";
+
+import {apiToken} from "@/apis";
+
+export default {
+  data() {
+    return {
+      avatar: ''
+    };
+  },
+  computed: {
+    ...mapGetters(["userInfo"])
+  },
+  mounted() {
+
+  },
+  methods: {
+    upload() {
+      const t = this;
+      wx.chooseImage({
+        success(res) {
+          const tempFilePaths = res.tempFilePaths;
+          t.$api('user.uploadAvatar').then((url) => {
+            uni.uploadFile({
+              url: url,
+              header: apiToken(),
+              filePath: tempFilePaths[0],
+              name: 'file',
+              formData: {
+                'language': t.userInfo['language'],
+                'nickname': t.userInfo['nickname'],
+              },
+              success: (v) => {
+                const data = JSON.parse(v.data);
+                if (data.code === 200) {
+                  t.avatar = data.data.url;
+                  return;
+                }
+                t.$log(data);
+              }
+            })
+          })
+        }
+      })
+    }
+  }
+};
 </script>
 
 <style lang='less'>
-	.content {
-		padding: 20rpx;
-	}
+.content {
+  padding: 20 rpx;
+}
 
-	.title {
-		font-size: 36upx;
-		color: #8f8f94;
-	}
+.title {
+  font-size: 36 upx;
+  color: #8f8f94;
+}
 </style>

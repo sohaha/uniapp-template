@@ -1,9 +1,3 @@
-/**
- * @Author: seekwe
- * @Date:   2019-11-07 12:44:25
- * @Last Modified by:   seekwe
- * @Last Modified time: 2019-12-17 16:54:45
- */
 import Vue from 'vue';
 import App from './App';
 import Store from './store';

@@ -1,10 +1,3 @@
-/**
- * @Author: seekwe
- * @Date:   2019-11-08 14:06:18
- * @Last Modified by:   seekwe
- * @Last Modified time: 2019-12-17 16:30:40
- */
-
 const $alert = (text, duration, success = null, opt = {}) => {
 	let defOpt = {
 		title: text,

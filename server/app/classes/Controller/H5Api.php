@@ -30,28 +30,4 @@ class H5Api extends Index
             ],
         ];
     }
-    /**
-     * POST请求入口
-     * @time 2019-1-7 13:04:28
-     */
-    public function POSTzIndex()
-    {
-        return [200, 'IS_POST'];
-    }
-    /**
-     * 控制器返回数组时，直接输出 json 数据
-     * @param $contents
-     * @param $methodName
-     * @param $controllerShort
-     * @param $args
-     * @param $controller
-     * @return mixed|string
-     */
-    public function after($contents, $methodName, $controllerShort, $args, $controller)
-    {
-        if (is_array($contents)) {
-            return Z::json($contents);
-        }
-        return $contents;
-    }
 }

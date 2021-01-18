@@ -1,9 +1,3 @@
-/**
- * @Author: seekwe
- * @Date:   2019-11-11 15:10:32
- * @Last Modified by:   seekwe
- * @Last Modified time: 2019-12-17 16:07:09
- */
 import { ajax, getToken } from './index';
 import { request } from './index';
 import $store from '../store';

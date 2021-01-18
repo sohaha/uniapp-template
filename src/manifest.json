@@ -67,10 +67,6 @@
     "optimization": {
       "subPackages": true
     },
-    "uniStatistics": {
-      "enable": false
-      //微信平台关闭统计
-    },
     "usingComponents": true,
     "permission": {
       "scope.userLocation": {

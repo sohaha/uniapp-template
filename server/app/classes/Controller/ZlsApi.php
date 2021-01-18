@@ -38,20 +38,38 @@ class ZlsApi extends Index
     {
         return [200, 'IS_POST'];
     }
+
+    /**
+     * 获取token
+     * @return string
+     */
+    final protected function getToken(): string
+    {
+        return z::server('HTTP_TOKEN') ?: z::getPost('token', z::server('HTTP_X_UPLOAD_TOKEN', ''));
+    }
+
     /**
      * 控制器返回数组时，直接输出 json 数据
+     *
      * @param $contents
      * @param $methodName
      * @param $controllerShort
      * @param $args
      * @param $controller
+     *
      * @return mixed|string
      */
     public function after($contents, $methodName, $controllerShort, $args, $controller)
     {
-        if (is_array($contents)) {
-            return Z::json($contents);
+        switch (true) {
+            case is_array($contents):
+                return Z::json($contents);
+            case is_string($contents):
+                return Z::json(211, $contents);
+            case null:
+                return '';
+            default:
+                return $contents;
         }
-        return $contents;
     }
 }
