@@ -14,6 +14,7 @@ export const SET_TOKEN = (state, token) => {
     data: token
   });
 };
+
 export const USER_SIGNIN = (state, user) => {
   util.$log('更新用户信息', user);
   if (user.nickname) {
@@ -31,4 +32,8 @@ export const USER_SIGNIN = (state, user) => {
 
 export const USER_SIGNOUT = state => {
   Object.keys(state.user).forEach(k => Vue.delete(state.user, k));
+};
+
+export const FEEDBACK = (state, token) => {
+  state.feedback = true;
 };

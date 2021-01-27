@@ -15,7 +15,8 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    token: uni.getStorageSync('token') || '' // 用户权鉴
+    token: uni.getStorageSync('token') || '', // 用户权鉴
+    feedback: false, // 是否出现异常了
   },
   actions,
   getters,

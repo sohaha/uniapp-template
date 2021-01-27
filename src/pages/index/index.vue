@@ -25,6 +25,9 @@
         <view v-for="(v, k) in systems" :key="k">{{ k }}: {{ v }}</view>
       </view>
     </view>
+    <!-- #ifdef MP-WEIXIN -->
+    <button v-if="showFeedback" open-type="feedback" style="position:fixed;margin:auto;right:0;width:200rpx;left:0;bottom:200rpx;background-color:red;border-radius:10rpx;color:#fff;">上报错误</button>
+    <!-- #endif -->
   </view>
 </template>
 
@@ -45,7 +48,23 @@ export default {
       systems: this.$systems()
     };
   },
+  watch: {
+		showFeedback(n) {
+			if (n) {
+        // #ifdef MP-WEIXIN
+				uni.showModal({
+					title: '抱歉',
+					content: '程序发生了异常，请尝试上报给开发者，以便尽快修复，谢谢！',
+					showCancel: false,
+        });
+        // #endif
+			}
+		},
+	},
   computed: {
+		showFeedback() {
+			return this.$store.getters.showFeedback;
+		},
     token() {
       return this.$store.getters.token || '-';
     },

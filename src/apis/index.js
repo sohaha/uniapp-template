@@ -214,6 +214,7 @@ export const getToken = async (fn = _ => {
         request.unlock();
         return null;
     } catch (e) {
+        store.commit('FEEDBACK');
         return e;
     }
 };

@@ -12,3 +12,5 @@ export const authState = state => state.user.authState;
 export const token = state => state.token;
 // 用户是否被禁止
 export const banState = state => state.user.banState;
+// 是否发生了异常
+export const showFeedback = state => state.feedback;
