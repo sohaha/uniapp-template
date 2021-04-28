@@ -8,23 +8,17 @@
     "packages": [
         {
             "name": "zls/action",
-            "version": "v1.2.17",
+            "version": "v1.2.18",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sohaha/ZlsPHP-Action.git",
-                "reference": "951c635659beff922073b215c5d0a611062e50ad"
+                "reference": "7249eb13cb28a842481011a91def0cef8763f114"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sohaha/ZlsPHP-Action/zipball/951c635659beff922073b215c5d0a611062e50ad",
-                "reference": "951c635659beff922073b215c5d0a611062e50ad",
-                "shasum": "",
-                "mirrors": [
-                    {
-                        "url": "https://mirrors.aliyun.com/composer/dists/%package%/%reference%.%type%",
-                        "preferred": true
-                    }
-                ]
+                "url": "https://api.github.com/repos/sohaha/ZlsPHP-Action/zipball/7249eb13cb28a842481011a91def0cef8763f114",
+                "reference": "7249eb13cb28a842481011a91def0cef8763f114",
+                "shasum": ""
             },
             "require": {
                 "ext-iconv": "*",
@@ -46,7 +40,11 @@
                     "email": "seekwe@gmail.com"
                 }
             ],
-            "time": "2020-12-17T08:29:08+00:00"
+            "support": {
+                "issues": "https://github.com/sohaha/ZlsPHP-Action/issues",
+                "source": "https://github.com/sohaha/ZlsPHP-Action/tree/v1.2.18"
+            },
+            "time": "2021-03-07T05:04:41+00:00"
         },
         {
             "name": "zls/cache",
@@ -60,13 +58,7 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/sohaha/ZlsPHP-Cache/zipball/ca2b700c1921005f2b8a960c7aa4c8adcecd983f",
                 "reference": "ca2b700c1921005f2b8a960c7aa4c8adcecd983f",
-                "shasum": "",
-                "mirrors": [
-                    {
-                        "url": "https://mirrors.aliyun.com/composer/dists/%package%/%reference%.%type%",
-                        "preferred": true
-                    }
-                ]
+                "shasum": ""
             },
             "type": "library",
             "autoload": {
@@ -84,27 +76,25 @@
                     "email": "seekwe@gmail.com"
                 }
             ],
+            "support": {
+                "issues": "https://github.com/sohaha/ZlsPHP-Cache/issues",
+                "source": "https://github.com/sohaha/ZlsPHP-Cache/tree/master"
+            },
             "time": "2018-09-27T11:26:45+00:00"
         },
         {
             "name": "zls/command",
-            "version": "v1.3.0",
+            "version": "v1.3.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sohaha/ZlsPHP-Command.git",
-                "reference": "5bac059853f46119dfb4d8b218cb2cf315a4e2d6"
+                "reference": "3d1149d8b8eca2dd7774c57958c445dde5b2424f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sohaha/ZlsPHP-Command/zipball/5bac059853f46119dfb4d8b218cb2cf315a4e2d6",
-                "reference": "5bac059853f46119dfb4d8b218cb2cf315a4e2d6",
-                "shasum": "",
-                "mirrors": [
-                    {
-                        "url": "https://mirrors.aliyun.com/composer/dists/%package%/%reference%.%type%",
-                        "preferred": true
-                    }
-                ]
+                "url": "https://api.github.com/repos/sohaha/ZlsPHP-Command/zipball/3d1149d8b8eca2dd7774c57958c445dde5b2424f",
+                "reference": "3d1149d8b8eca2dd7774c57958c445dde5b2424f",
+                "shasum": ""
             },
             "require": {
                 "zls/dao": "*"
@@ -125,27 +115,25 @@
                     "email": "seekwe@gmail.com"
                 }
             ],
-            "time": "2020-12-21T14:00:57+00:00"
+            "support": {
+                "issues": "https://github.com/sohaha/ZlsPHP-Command/issues",
+                "source": "https://github.com/sohaha/ZlsPHP-Command/tree/v1.3.1"
+            },
+            "time": "2021-04-16T09:43:03+00:00"
         },
         {
             "name": "zls/dao",
-            "version": "v1.1.12",
+            "version": "v1.1.15",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sohaha/ZlsPHP-Dao.git",
-                "reference": "5b3e1861d903112c487b689e5921f3f12f466cf7"
+                "reference": "3cb73e4694889fa2c20655907633c4f6f0b33655"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sohaha/ZlsPHP-Dao/zipball/5b3e1861d903112c487b689e5921f3f12f466cf7",
-                "reference": "5b3e1861d903112c487b689e5921f3f12f466cf7",
-                "shasum": "",
-                "mirrors": [
-                    {
-                        "url": "https://mirrors.aliyun.com/composer/dists/%package%/%reference%.%type%",
-                        "preferred": true
-                    }
-                ]
+                "url": "https://api.github.com/repos/sohaha/ZlsPHP-Dao/zipball/3cb73e4694889fa2c20655907633c4f6f0b33655",
+                "reference": "3cb73e4694889fa2c20655907633c4f6f0b33655",
+                "shasum": ""
             },
             "type": "library",
             "autoload": {
@@ -166,27 +154,25 @@
                     "email": "seekwe@gmail.com"
                 }
             ],
-            "time": "2020-10-22T08:36:59+00:00"
+            "support": {
+                "issues": "https://github.com/sohaha/ZlsPHP-Dao/issues",
+                "source": "https://github.com/sohaha/ZlsPHP-Dao/tree/v1.1.15"
+            },
+            "time": "2021-04-16T09:44:27+00:00"
         },
         {
             "name": "zls/framework",
-            "version": "v2.5.16",
+            "version": "v2.5.17",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sohaha/ZlsPHP-Framework.git",
-                "reference": "95c5c93615cf5814276d32f152297097110d956f"
+                "reference": "e4c0576f8aa716c184015e7a92462508d3baefc6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sohaha/ZlsPHP-Framework/zipball/95c5c93615cf5814276d32f152297097110d956f",
-                "reference": "95c5c93615cf5814276d32f152297097110d956f",
-                "shasum": "",
-                "mirrors": [
-                    {
-                        "url": "https://mirrors.aliyun.com/composer/dists/%package%/%reference%.%type%",
-                        "preferred": true
-                    }
-                ]
+                "url": "https://api.github.com/repos/sohaha/ZlsPHP-Framework/zipball/e4c0576f8aa716c184015e7a92462508d3baefc6",
+                "reference": "e4c0576f8aa716c184015e7a92462508d3baefc6",
+                "shasum": ""
             },
             "require": {
                 "ext-json": "*",
@@ -208,7 +194,11 @@
                     "email": "seekwe@gmail.com"
                 }
             ],
-            "time": "2021-01-08T09:27:43+00:00"
+            "support": {
+                "issues": "https://github.com/sohaha/ZlsPHP-Framework/issues",
+                "source": "https://github.com/sohaha/ZlsPHP-Framework/tree/v2.5.17"
+            },
+            "time": "2021-03-07T09:16:03+00:00"
         },
         {
             "name": "zls/install",
@@ -222,13 +212,7 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/sohaha/ZlsPHP-Install/zipball/e803393790f4b716a854d96a3803003de0360307",
                 "reference": "e803393790f4b716a854d96a3803003de0360307",
-                "shasum": "",
-                "mirrors": [
-                    {
-                        "url": "https://mirrors.aliyun.com/composer/dists/%package%/%reference%.%type%",
-                        "preferred": true
-                    }
-                ]
+                "shasum": ""
             },
             "require": {
                 "ext-iconv": "*",
@@ -251,6 +235,10 @@
                     "email": "seekwe@gmail.com"
                 }
             ],
+            "support": {
+                "issues": "https://github.com/sohaha/ZlsPHP-Install/issues",
+                "source": "https://github.com/sohaha/ZlsPHP-Install/tree/v0.0.2"
+            },
             "time": "2020-12-17T05:38:23+00:00"
         },
         {
@@ -265,13 +253,7 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/sohaha/ZlsPHP-Logger/zipball/e5c2ee2146977256756aeeb5371231ce034ca401",
                 "reference": "e5c2ee2146977256756aeeb5371231ce034ca401",
-                "shasum": "",
-                "mirrors": [
-                    {
-                        "url": "https://mirrors.aliyun.com/composer/dists/%package%/%reference%.%type%",
-                        "preferred": true
-                    }
-                ]
+                "shasum": ""
             },
             "type": "library",
             "autoload": {
@@ -289,27 +271,25 @@
                     "email": "seekwe@gmail.com"
                 }
             ],
+            "support": {
+                "issues": "https://github.com/sohaha/ZlsPHP-Logger/issues",
+                "source": "https://github.com/sohaha/ZlsPHP-Logger/tree/v1.1.7"
+            },
             "time": "2019-12-26T09:12:34+00:00"
         },
         {
             "name": "zls/manage",
-            "version": "v0.2.5",
+            "version": "v0.2.12",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sohaha/ZlsPHP-Manage.git",
-                "reference": "3fe3afb5a2dd826bc072b358e505eb27d2d3122d"
+                "reference": "b99fb253d07285d9e1cb7b0d8cb4a919ac57ddee"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sohaha/ZlsPHP-Manage/zipball/3fe3afb5a2dd826bc072b358e505eb27d2d3122d",
-                "reference": "3fe3afb5a2dd826bc072b358e505eb27d2d3122d",
-                "shasum": "",
-                "mirrors": [
-                    {
-                        "url": "https://mirrors.aliyun.com/composer/dists/%package%/%reference%.%type%",
-                        "preferred": true
-                    }
-                ]
+                "url": "https://api.github.com/repos/sohaha/ZlsPHP-Manage/zipball/b99fb253d07285d9e1cb7b0d8cb4a919ac57ddee",
+                "reference": "b99fb253d07285d9e1cb7b0d8cb4a919ac57ddee",
+                "shasum": ""
             },
             "require": {
                 "zls/install": "*",
@@ -332,7 +312,11 @@
                 }
             ],
             "description": "ZlsPHP通用后台",
-            "time": "2021-01-15T04:42:12+00:00"
+            "support": {
+                "issues": "https://github.com/sohaha/ZlsPHP-Manage/issues",
+                "source": "https://github.com/sohaha/ZlsPHP-Manage/tree/v0.2.12"
+            },
+            "time": "2021-03-15T09:52:26+00:00"
         },
         {
             "name": "zls/migration",
@@ -346,13 +330,7 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/sohaha/ZlsPHP-Migration/zipball/eff35a82bed7698bb0c50bc24d352bd029ba8421",
                 "reference": "eff35a82bed7698bb0c50bc24d352bd029ba8421",
-                "shasum": "",
-                "mirrors": [
-                    {
-                        "url": "https://mirrors.aliyun.com/composer/dists/%package%/%reference%.%type%",
-                        "preferred": true
-                    }
-                ]
+                "shasum": ""
             },
             "require": {
                 "php": ">=5.6.0"
@@ -375,6 +353,10 @@
                 }
             ],
             "description": "Easy to manage the database migrations",
+            "support": {
+                "issues": "https://github.com/sohaha/ZlsPHP-Migration/issues",
+                "source": "https://github.com/sohaha/ZlsPHP-Migration/tree/v1.1.6.2"
+            },
             "time": "2019-09-27T10:16:03+00:00"
         },
         {
@@ -389,13 +371,7 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/sohaha/ZlsPHP-Session/zipball/220ae9fb847552014111c975bc02e5cca9490633",
                 "reference": "220ae9fb847552014111c975bc02e5cca9490633",
-                "shasum": "",
-                "mirrors": [
-                    {
-                        "url": "https://mirrors.aliyun.com/composer/dists/%package%/%reference%.%type%",
-                        "preferred": true
-                    }
-                ]
+                "shasum": ""
             },
             "type": "library",
             "autoload": {
@@ -413,6 +389,10 @@
                     "email": "seekwe@gmail.com"
                 }
             ],
+            "support": {
+                "issues": "https://github.com/sohaha/ZlsPHP-Session/issues",
+                "source": "https://github.com/sohaha/ZlsPHP-Session/tree/master"
+            },
             "time": "2018-09-30T09:13:57+00:00"
         },
         {
@@ -427,13 +407,7 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/sohaha/zls-wechat/zipball/33d5f82f8d96a8dada9090156953744258566526",
                 "reference": "33d5f82f8d96a8dada9090156953744258566526",
-                "shasum": "",
-                "mirrors": [
-                    {
-                        "url": "https://mirrors.aliyun.com/composer/dists/%package%/%reference%.%type%",
-                        "preferred": true
-                    }
-                ]
+                "shasum": ""
             },
             "require": {
                 "zls/action": "*",
@@ -456,6 +430,10 @@
                 }
             ],
             "description": "wechat develop, Support WeChat, Work WeChat, WeChat open platform",
+            "support": {
+                "issues": "https://github.com/sohaha/zls-wechat/issues",
+                "source": "https://github.com/sohaha/zls-wechat/tree/v1.1.14"
+            },
             "time": "2020-01-13T11:15:49+00:00"
         }
     ],
@@ -467,5 +445,5 @@
     "prefer-lowest": false,
     "platform": [],
     "platform-dev": [],
-    "plugin-api-version": "1.1.0"
+    "plugin-api-version": "2.0.0"
 }
