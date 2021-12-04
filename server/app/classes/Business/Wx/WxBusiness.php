@@ -1,5 +1,5 @@
 <?php
-declare(strict_types=1);
+declare (strict_types = 1);
 
 namespace Business\Wx;
 
@@ -7,6 +7,7 @@ use Z;
 use Zls\WeChat\Main;
 
 class WxBusiness extends \Zls_Business
+
 {
     /** @var Main */
     protected $wx;
@@ -19,7 +20,7 @@ class WxBusiness extends \Zls_Business
     /**
      * @return Main
      */
-    public function instance()
+    public function wxInstance()
     {
         return $this->wx;
     }
@@ -30,7 +31,7 @@ class WxBusiness extends \Zls_Business
      */
     public function getAccessToken(): string
     {
-        return $this->wx->getAccessToken()?:'';
+        return $this->wx->getAccessToken() ?: '';
     }
 
     /**
@@ -67,7 +68,7 @@ class WxBusiness extends \Zls_Business
     {
         $info = [
             'session_key' => '',
-            'id'          => 0,
+            'id' => 0,
         ];
         if (!$data = Z::decrypt($token)) {
             return $info;
@@ -75,7 +76,7 @@ class WxBusiness extends \Zls_Business
         $data = explode('|', $data);
         return [
             'session_key' => Z::arrayGet($data, 0, ''),
-            'id'          => (int)Z::arrayGet($data, 1, 0),
+            'id' => (int) Z::arrayGet($data, 1, 0),
         ];
     }
 }

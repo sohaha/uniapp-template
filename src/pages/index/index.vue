@@ -18,7 +18,7 @@
       <!-- #endif -->
 
       <view class="demo-title-box">
-        <text class="title" @click="goNextView">{{ title }} - 页面跳转</text>
+        <text class="title" @click="goNextView">{{ title }} - 跳转</text>
         <view>{{ token }}</view>
         <AuthBtn @click="getuserinfo">{{ loginText }}</AuthBtn>
         <AuthBtn openType="getPhoneNumber" size="mini" @click="getPhoneNumber" :authState="false">获取手机号码</AuthBtn>
@@ -30,6 +30,12 @@
     <!-- #endif -->
   </view>
 </template>
+
+<script setup>
+import {ref} from 'vue';
+
+const title = ref('Hello App')
+</script>
 
 <script>
 import {mapState, mapGetters} from 'vuex';
@@ -44,7 +50,6 @@ export default {
   },
   data() {
     return {
-      title: 'Hello App',
       systems: this.$systems()
     };
   },

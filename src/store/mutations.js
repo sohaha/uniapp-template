@@ -4,7 +4,6 @@
  * @Last Modified by:   seekwe
  * @Last Modified time: 2019-12-18 20:05:59
  */
-import Vue from 'vue';
 import util from '@/common/util';
 
 export const SET_TOKEN = (state, token) => {
@@ -31,7 +30,7 @@ export const USER_SIGNIN = (state, user) => {
 };
 
 export const USER_SIGNOUT = state => {
-  Object.keys(state.user).forEach(k => Vue.delete(state.user, k));
+  state.user = {}
 };
 
 export const FEEDBACK = (state, token) => {

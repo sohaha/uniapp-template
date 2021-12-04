@@ -1,5 +1,5 @@
 <?php
-declare(strict_types=1);
+declare (strict_types = 1);
 
 namespace Controller;
 
@@ -24,7 +24,7 @@ class WeAppApi extends ZlsApi
 
     public function before($method, $controllerShort, $args, $controller)
     {
-        $router = str_replace('_', '/', z::strCamel2Snake(str_replace('\\', '/', $controllerShort) . '/' . $method, ''));
+        $router = ltrim(str_replace('_', '/', z::strCamel2Snake(str_replace('\\', '/', $controllerShort) . '/' . $method, '')), '/');
         $token = $this->getToken();
         $ignore = ['weappapi/gettoken', 'weappapi/getwebtoken'];
         $this->wx = new WeappBusiness();
@@ -42,7 +42,7 @@ class WeAppApi extends ZlsApi
             }
 
             $this->userinfo = array_merge($userinfo, $member);
-            $status = (int)Z::arrayGet($this->userinfo, 'status');
+            $status = (int) Z::arrayGet($this->userinfo, 'status');
             if ($status === $wxMemberDao::STATUS_BAN) {
                 return [402, '账号已被禁止'];
             }
@@ -58,7 +58,7 @@ class WeAppApi extends ZlsApi
     public function POSTzGetToken()
     {
         $code = z::postJson('code', '');
-        $info = $this->wx->instance()->getApp()->getSessionKey($code);
+        $info = $this->wx->wxInstance()->getApp()->getSessionKey($code);
         if (is_string($info)) {
             return [211, $info];
         } elseif (!$info) {
@@ -95,7 +95,7 @@ class WeAppApi extends ZlsApi
         $encryptedData = z::postJson('encryptedData', '');
         $info = $this->wx->decrypt($iv, $encryptedData, $this->userinfo['session_key']);
         if (!$info) {
-            $err = $this->wx->instance()->getError();
+            $err = $this->wx->wxInstance()->getError();
             if ($err['code'] === -41004) {
                 // 数据解密失败一般是session过期了
                 return [401, $err['msg'], $err];
@@ -155,7 +155,7 @@ class WeAppApi extends ZlsApi
         $fileUpload->setFormField('file');
         $fileUpload->setMaxSize(2048);
         $fileUpload->setExt(['jpg', 'png', 'jpeg', 'gif']);
-        $name = md5((string)$this->userinfo['id']);
+        $name = md5((string) $this->userinfo['id']);
         $dir = Z::realPathMkdir("static/wx/avatar", false);
         $path = $fileUpload->saveFile($name, $dir);
         // z::post('nickname'); // 接收额外的 form data

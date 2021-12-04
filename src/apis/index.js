@@ -14,18 +14,31 @@ import appApi from './util-h5';
 // https://wendux.github.io/dist/#/doc/flyio/readme
 export const request = new Fly();
 const newFly = new Fly();
-const files = require.context('./modules', false, /\.js$/);
-let apis = {},
-    defModule = {};
 
-files.keys().forEach(key => {
+let apis = {}, defModule = {};
+
+// #ifndef VUE3
+const files = require.context('./modules', false, /\.js$/);
+const filesKeys = files.keys();
+filesKeys.forEach(key => {
     if (key === './index.js') {
         defModule = files(key).default;
         return;
     }
     apis[key.replace(/(\.\/|\.js)/g, '')] = files(key).default;
 });
+// #endif
 
+// #ifdef VUE3
+const files = import.meta.globEager('./modules/*.js')
+const filesKeys = Object.keys(files);
+filesKeys.forEach((key) => {
+  if (key === './index.js') return;
+  apis[key.replace(/(\.\/|\.js)/g, '').slice(8)] = files[key].default 
+})
+// #endif
+
+console.log(apis)
 // if (typeof Promise.prototype['finally'] === 'undefined')
 Promise.prototype['finally'] = function (callback) {
     let P = this.constructor;
