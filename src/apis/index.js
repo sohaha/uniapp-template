@@ -1,6 +1,7 @@
 import cfg, {apiDataKeepJSON} from '../config';
 import util from '../common/util';
-import store from '../store';
+// import store from '../store';
+import {useAuthStore} from '../stores/auth';
 import Fly from 'flyio/dist/npm/wx';
 import qs from 'qs';
 import {getToken as ApiGetToken} from './modules/user';
@@ -17,26 +18,13 @@ const newFly = new Fly();
 
 let apis = {}, defModule = {};
 
-// #ifndef VUE3
-const files = require.context('./modules', false, /\.js$/);
-const filesKeys = files.keys();
-filesKeys.forEach(key => {
-    if (key === './index.js') {
-        defModule = files(key).default;
-        return;
-    }
-    apis[key.replace(/(\.\/|\.js)/g, '')] = files(key).default;
-});
-// #endif
 
-// #ifdef VUE3
 const files = import.meta.globEager('./modules/*.js')
 const filesKeys = Object.keys(files);
 filesKeys.forEach((key) => {
   if (key === './index.js') return;
   apis[key.replace(/(\.\/|\.js)/g, '').slice(8)] = files[key].default 
 })
-// #endif
 
 console.log(apis)
 // if (typeof Promise.prototype['finally'] === 'undefined')
@@ -231,8 +219,10 @@ export const getToken = async (fn = _ => {
         return e;
     }
 };
+
 export const apiToken = () => {
-    let token = store.getters.token;
+    const authStore = useAuthStore()
+    let token = authStore.token;
     if (!token) {
         return {};
     }

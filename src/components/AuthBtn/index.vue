@@ -12,7 +12,7 @@
   </button>
 </template>
 <script>
-import {mapState, mapGetters} from 'vuex';
+// import {mapState, mapGetters} from 'vuex';
 
 export default {
   props: {
@@ -45,7 +45,7 @@ export default {
       }
       return authState ? '' : this.openType;
     },
-    ...mapGetters({getAuthState: 'authState'})
+    // ...mapGetters({getAuthState: 'authState'})
   },
   methods: {
     click() {

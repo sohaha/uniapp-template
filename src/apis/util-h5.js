@@ -1,6 +1,6 @@
 import { ajax, getToken } from './index';
 import { request } from './index';
-import $store from '../store';
+// import $store from '../store';
 import util from '@/common/util';
 export default {
   async checkSession() {

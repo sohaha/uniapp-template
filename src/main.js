@@ -1,5 +1,5 @@
 import App from './App';
-import Store from './store';
+// import Store from './store';
 import cfg from './config';
 import {
 	ajax as Api
@@ -38,7 +38,7 @@ uni.getSystemInfo({
 const mounted = async () => {
 	await appApi.checkSession();
 	try {
-		
+		return
 		let res = await appApi.getUserInfo();
 		if (!res) {
 			util.$log('获取到用户信息失败,需要手动登录');
@@ -102,42 +102,18 @@ const mounted = async () => {
 	}
 }
 
-// #ifndef VUE3
-import Vue from 'vue';
-
-Object.assign(Vue.prototype, util);
-Vue.config.productionTip = false;
-
-Vue.prototype.$websiteUrl = cfg.websiteUrl;
-Vue.prototype.$store = Store;
-Vue.prototype.$api = Api;
-Vue.prototype.$eventHub = Vue.prototype.$eventHub || new Vue();
-
-App.mpType = 'app';
-const app = new Vue({
-	components: {},
-	mounted,
-	methods: {},
-	...App
-});
-app.$mount();
-// #endif
-
-
-
-
-// #ifdef VUE3
 import {
 	createSSRApp
 } from 'vue'
+import * as Pinia from 'pinia';
 
 export function createApp() {
 	const app = createSSRApp(App)
-	
-	app.use(Store)
+	app.use(Pinia.createPinia());
+	// app.use(Store)
 
 	app.config.globalProperties.$websiteUrl = cfg.websiteUrl;
-	app.config.globalProperties.$store = Store;
+	// app.config.globalProperties.$store = Store;
 	app.config.globalProperties.$api = Api;
 	Object.keys(util).forEach((k => {
 		app.config.globalProperties[k] = util[k]
@@ -148,4 +124,3 @@ export function createApp() {
 		app
 	}
 }
-// #endif
